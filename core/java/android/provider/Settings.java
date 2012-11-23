@@ -11013,6 +11013,21 @@ public final class Settings {
          */
         public static final String DEVICE_STATE_ROTATION_LOCK =
                 "device_state_rotation_lock";
+        
+        /**
+         * The time in ms to keep the button backlight on after pressing a button.
+         * A value of 0 will keep the buttons on for as long as the screen is on.
+         * @hide
+         */
+        public static final String BUTTON_BACKLIGHT_TIMEOUT = "button_backlight_timeout";
+
+        /**
+         * The button brightness to be used while the screen is on or after a button press,
+         * depending on the value of {@link BUTTON_BACKLIGHT_TIMEOUT}.
+         * Valid value range is between 0 and {@link PowerManager#getMaximumButtonBrightness()}
+         * @hide
+         */
+        public static final String BUTTON_BRIGHTNESS = "button_brightness";
 
         /**
          * Gesture navbar length mode.
@@ -11027,7 +11042,7 @@ public final class Settings {
          * @hide
          */
         public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
-
+        
         /**
          * Whether to show privacy indicator for location
          * Default value is based on it's device config flag
