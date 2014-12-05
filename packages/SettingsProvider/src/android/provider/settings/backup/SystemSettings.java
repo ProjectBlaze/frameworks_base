@@ -91,5 +91,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.VOLUME_KEY_CURSOR_CONTROL,
+        Settings.System.STATUS_BAR_NOTIF_COUNT,
     };
 }
