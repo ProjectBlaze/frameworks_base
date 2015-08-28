@@ -5589,6 +5589,13 @@ public final class Settings {
          */
         public static final String UDFPS_ICON = "udfps_icon";
 
+	/**
+	 * Toast icon
+         * @hide
+         */
+        @Readable
+        public static final String TOAST_ICON = "toast_icon";
+
         /**
          * These are all public system settings
          *
