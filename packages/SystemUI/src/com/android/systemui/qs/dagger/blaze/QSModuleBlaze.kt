@@ -24,6 +24,7 @@ import com.android.systemui.qs.tiles.AmbientDisplayTile
 import com.android.systemui.qs.tiles.UsbTetherTile
 import com.android.systemui.qs.tiles.AODTile
 import com.android.systemui.qs.tiles.SoundSearchTile
+import com.android.systemui.qs.tiles.CaffeineTile
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -73,4 +74,10 @@ interface QSModuleBlaze {
     @IntoMap
     @StringKey(SoundSearchTile.TILE_SPEC)
     fun bindSoundSearchTile(soundSearchTile: SoundSearchTile): QSTileImpl<*>
+
+    /** Inject CaffeineTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(CaffeineTile.TILE_SPEC)
+    fun bindCaffeineTile(caffeineTile: CaffeineTile): QSTileImpl<*>
 }
