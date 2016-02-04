@@ -17,6 +17,7 @@
 package com.android.systemui.qs.dagger.blaze
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
+import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.CellularTile
 import com.android.systemui.qs.tiles.PowerShareTile
 import com.android.systemui.qs.tiles.HeadsUpTile
@@ -29,6 +30,12 @@ import dagger.multibindings.StringKey
 @Module
 interface QSModuleblaze {
 
+    /** Inject CaffeineTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(CaffeineTile.TILE_SPEC)
+    fun bindCaffeineTile(caffeineTile: CaffeineTile): QSTileImpl<*>
+    
     /** Inject CellularTile into tileMap in QSModule */
     @Binds
     @IntoMap
