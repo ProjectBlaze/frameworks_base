@@ -2169,6 +2169,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         mStrongAuthTracker = new StrongAuthTracker(context);
         mFaceAuthOnlyOnSecurityView = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_faceAuthOnlyOnSecurityView);
+        mFingerprintWakeAndUnlock = mContext.getResources().getBoolean(
+                com.android.systemui.R.bool.config_fingerprintWakeAndUnlock);
         mBackgroundExecutor = backgroundExecutor;
         mBroadcastDispatcher = broadcastDispatcher;
         mInteractionJankMonitor = interactionJankMonitor;
@@ -2832,7 +2834,18 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         final int user = getCurrentUser();
         final boolean userDoesNotHaveTrust = !getUserHasTrust(user);
         final boolean shouldListenForFingerprintAssistant = shouldListenForFingerprintAssistant();
-        final boolean shouldListenKeyguardState =
+        final boolean shouldListenKeyguardState;
+        if (!mFingerprintWakeAndUnlock) {
+            shouldListenKeyguardState =
+                (isKeyguardVisible()
+                        || mPrimaryBouncerIsOrWillBeShowing
+                        || shouldListenForFingerprintAssistant
+                        || (mKeyguardOccluded && mIsDreaming))
+                        && mDeviceInteractive && !mGoingToSleep && !mKeyguardGoingAway
+                        || (mKeyguardOccluded && userDoesNotHaveTrust
+                            && (mOccludingAppRequestingFp || isUdfps));
+        } else {
+            shouldListenKeyguardState =
                 isKeyguardVisible()
                         || !mDeviceInteractive
                         || (mPrimaryBouncerIsOrWillBeShowing && !mKeyguardGoingAway)
@@ -2841,6 +2854,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         || (mKeyguardOccluded && mIsDreaming)
                         || (mKeyguardOccluded && userDoesNotHaveTrust
                             && (mOccludingAppRequestingFp || isUdfps || mAlternateBouncerShowing));
+        }
 
         // Only listen if this KeyguardUpdateMonitor belongs to the primary user. There is an
         // instance of KeyguardUpdateMonitor for each user but KeyguardUpdateMonitor is user-aware.
