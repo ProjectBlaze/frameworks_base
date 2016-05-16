@@ -10934,6 +10934,22 @@ public final class Settings {
         public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
 
         /**
+         * Change quick settings tiles animation style
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_ANIM_STYLE =
+                "quick_settings_tiles_anim_style";
+
+        /**
+         * Change quick settings tiles animation duration
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_ANIM_DURATION =
+                "quick_settings_tiles_anim_duration";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
