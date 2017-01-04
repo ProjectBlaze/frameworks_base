@@ -17,6 +17,7 @@ package com.android.systemui.statusbar.phone;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_ICON;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_MOBILE;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_MOBILE_NEW;
+import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_NETWORK_TRAFFIC;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_WIFI;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_WIFI_NEW;
 
@@ -57,6 +58,7 @@ import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsVi
 import com.android.systemui.statusbar.pipeline.wifi.ui.WifiUiAdapter;
 import com.android.systemui.statusbar.pipeline.wifi.ui.view.ModernStatusBarWifiView;
 import com.android.systemui.statusbar.pipeline.wifi.ui.viewmodel.LocationBasedWifiViewModel;
+import com.android.systemui.statusbar.policy.NetworkTrafficSB;
 import com.android.systemui.util.Assert;
 
 import java.util.ArrayList;
@@ -225,8 +227,10 @@ public interface StatusBarIconController {
 
         @Override
         public void onSetIcon(int viewIndex, StatusBarIcon icon) {
-            super.onSetIcon(viewIndex, icon);
-            mDarkIconDispatcher.applyDark((DarkReceiver) mGroup.getChildAt(viewIndex));
+            View view = mGroup.getChildAt(viewIndex);
+            if (view instanceof StatusBarIconView) {
+                ((StatusBarIconView) view).set(icon);
+            }
         }
 
         @Override
@@ -473,6 +477,9 @@ public interface StatusBarIconController {
 
                 case TYPE_MOBILE_NEW:
                     return addNewMobileIcon(index, slot, holder.getTag());
+
+                case TYPE_NETWORK_TRAFFIC:
+                    return addNetworkTraffic(index, slot);
             }
 
             return null;
@@ -504,6 +511,12 @@ public interface StatusBarIconController {
             return view;
         }
 
+        protected NetworkTrafficSB addNetworkTraffic(int index, String slot) {
+            NetworkTrafficSB view = onCreateNetworkTraffic(slot);
+            mGroup.addView(view, index, onCreateLayoutParams());
+            return view;
+        }
+
         protected StatusIconDisplayable addNewWifiIcon(int index, String slot) {
             if (!mStatusBarPipelineFlags.useNewWifiIcon()) {
                 throw new IllegalStateException("Attempting to add a wifi icon using the new"
@@ -516,7 +529,6 @@ public interface StatusBarIconController {
             if (mIsInDemoMode) {
                 mDemoStatusIcons.addModernWifiView(mWifiViewModel);
             }
-
             return view;
         }
 
@@ -599,6 +611,12 @@ public interface StatusBarIconController {
                             slot,
                             mMobileIconsViewModel.viewModelForSub(subId, mLocation)
                         );
+        }
+
+        private NetworkTrafficSB onCreateNetworkTraffic(String slot) {
+            NetworkTrafficSB view = new NetworkTrafficSB(mContext);
+            view.setPadding(2, 0, 2, 0);
+            return view;
         }
 
         protected LinearLayout.LayoutParams onCreateLayoutParams() {
