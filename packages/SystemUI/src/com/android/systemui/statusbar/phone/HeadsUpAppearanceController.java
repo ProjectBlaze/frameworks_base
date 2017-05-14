@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.widget.ViewClippingUtil;
 import com.android.systemui.R;
+import com.android.systemui.derp.logo.LogoImage;
 import com.android.systemui.dagger.qualifiers.RootView;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
@@ -88,6 +89,8 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
 
     private final Optional<View> mOperatorNameViewOptional;
 
+    private final LogoImage mLeftLogo;
+
     @VisibleForTesting
     float mExpandedHeight;
     @VisibleForTesting
@@ -142,6 +145,7 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
         mClockController = new ClockController(statusBarView.getContext(), statusBarView);
         mOperatorNameViewOptional = operatorNameViewOptional;
         mDarkIconDispatcher = darkIconDispatcher;
+        mLeftLogo = statusBarView.findViewById(R.id.statusbar_logo);
 
         mView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -246,8 +250,14 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
                 show(mView);
                 if (!isRightClock) hide(clockView, View.INVISIBLE);
                 mOperatorNameViewOptional.ifPresent(view -> hide(view, View.INVISIBLE));
+                if (mLeftLogo.getVisibility() != View.GONE)
+                    mLeftLogo.setVisibility(View.INVISIBLE);
             } else {
-                if (!isRightClock) show(clockView);
+                if (mLeftLogo.getVisibility() != View.GONE)
+                    mLeftLogo.setVisibility(View.VISIBLE);
+                if (!isRightClock)  {
+                    show(clockView);
+                }
                 mOperatorNameViewOptional.ifPresent(this::show);
                 hide(mView, View.GONE, () -> {
                     updateParentClipping(true /* shouldClip */);
