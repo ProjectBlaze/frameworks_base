@@ -229,6 +229,11 @@ interface IStatusBarService
 
     /** Project Blaze additions. */
     void toggleCameraFlash();
+    void toggleRecentApps();
+    void toggleSplitScreen();
+    void preloadRecentApps();
+    void cancelPreloadRecentApps();
+
     void screenPinningStateChanged(boolean enabled);
 
     /** Used to block or unblock usage of gestural navigation. */
