@@ -35,4 +35,7 @@
 
     <!-- Name of the nfc status bar icon. -->
     <string name="status_bar_nfc">NFC</string>
+
+    <!-- Name of the vpn status bar icon. -->
+   <string name="status_bar_vpn">VPN</string>
 </resources>
