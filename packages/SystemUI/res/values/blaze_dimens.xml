@@ -4,4 +4,6 @@
     <dimen name="udfps_animation_size">180dp</dimen>
     <dimen name="udfps_animation_offset">0dp</dimen>
 
+    <!-- QQS Brightness slider -->
+    <dimen name="quick_qs_brightness_margin_top">24dp</dimen>
 </resources>
