@@ -11819,6 +11819,16 @@ public final class Settings {
         public static final String QQS_NUM_COLUMNS_LANDSCAPE = "qqs_num_columns_landscape";
 
         /**
+         * Position to show statusbar clock
+         * 0 = Left (Default)
+         * 1 = Center
+         * 2 = Right
+         * @hide
+         */
+        @Readable
+        public static final String STATUS_BAR_CLOCK = "status_bar_clock";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
