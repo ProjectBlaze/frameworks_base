@@ -5410,7 +5410,13 @@ public final class Settings {
         public static final String SIP_RECEIVE_CALLS = "sip_receive_calls";
 
         /**
-         * Call Preference String.
+         * Whether to show the battery info on the lockscreen while charging
+         * @hide
+         */
+        public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+
+	/**
+	 * Call Preference String.
          * "SIP_ALWAYS" : Always use SIP with network access
          * "SIP_ADDRESS_ONLY" : Only if destination is a SIP address
          * @hide
