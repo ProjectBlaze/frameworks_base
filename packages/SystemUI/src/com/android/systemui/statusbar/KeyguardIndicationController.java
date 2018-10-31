@@ -985,7 +985,9 @@ public class KeyguardIndicationController {
             if (mChargingCurrent > 0) {
                 current = (mChargingCurrent < 5 ? (mChargingCurrent * 1000)
                         : (mChargingCurrent < 4000 ? mChargingCurrent : (mChargingCurrent / 1000)));
-                batteryInfo = batteryInfo + current + "mA";
+                batteryInfo = batteryInfo + (mChargingCurrent < 5 ?
+                        (mChargingCurrent * 1000) : (mChargingCurrent < 4000 ?
+                        mChargingCurrent : (mChargingCurrent / 1000))) + "mA";
             }
             if (mChargingVoltage > 0 && mChargingCurrent > 0) {
                 voltage = mChargingVoltage / 1000 / 1000;
