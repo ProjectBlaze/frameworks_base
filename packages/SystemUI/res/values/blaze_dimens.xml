@@ -95,5 +95,5 @@
     <dimen name="floating_rotation_button_min_margin_navbar">60dp</dimen>
 
     <!-- OmniWeather image size -->
-    <dimen name="current_weather_image_size">42dp</dimen>
+    <dimen name="current_weather_image_size">30dp</dimen>
 </resources>
