@@ -5572,8 +5572,14 @@ public final class Settings {
          */
         @Readable
         public static final String TOAST_ICON = "toast_icon";
+        
+        /**
+         * Volume panel on left
+         * @hide
+         */
+        public static final String VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
 
-	/**
+        /**
          * Wheter to show network traffic indicator in statusbar
          * @hide
          */
