@@ -91,5 +91,6 @@ public class SystemSettings {
         Settings.System.ENABLE_RIPPLE_EFFECT,
         Settings.System.LOCKSCREEN_SMALL_CLOCK,
 	Settings.System.SCREEN_OFF_FOD,
+        Settings.System.VOLUME_PANEL_ON_LEFT,
     };
 }
