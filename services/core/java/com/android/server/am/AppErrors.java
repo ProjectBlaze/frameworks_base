@@ -655,10 +655,12 @@ class AppErrors {
             }
 
             // Add paste content for Memochō option
-            String devfp = SystemProperties.get("ro.vendor.build.fingerprint", "");
+            String devFP = SystemProperties.get("ro.vendor.build.fingerprint", "");
             String blazeVers = SystemProperties.get("ro.blaze.version", "");
+            String boardName = SystemProperties.get("ro.product.board", "");
             data.paste = "time: " + timeMillis + "\n" +
-            "device fp:" + devfp + "\n" +
+            "device fp:" + devFP + "\n" +
+            "product board:" + boardName + "\n" +
             "blaze vers:" + blazeVers + "\n" +
             "msg: " + longMsg + "\n" +
             "stacktrace: " + stackTrace;
