@@ -5585,6 +5585,12 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_TYPE = "network_traffic_type";
 
         /**
+         * Whether to disable showing arrows in statusbar network traffic indicators
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_ARROW = "network_traffic_arrow";
+
+        /**
          * @hide
          */
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
