@@ -33,6 +33,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.PackageManagerInternal;
+import android.content.pm.PackageParser;
 import android.content.pm.PermissionInfo;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
@@ -68,6 +69,7 @@ import android.util.Xml;
 import com.android.internal.R;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.XmlUtils;
+import com.android.internal.util.aicp.OmniJawsClient;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
 import com.android.server.pm.permission.LegacyPermissionManagerInternal.PackagesProvider;
@@ -997,6 +999,10 @@ final class DefaultPermissionGrantPolicy {
         grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.dialer", userId, PHONE_PERMISSIONS,
                 CAMERA_PERMISSIONS, CONTACTS_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS, MICROPHONE_PERMISSIONS,
                 NEARBY_DEVICES_PERMISSIONS, SMS_PERMISSIONS, STORAGE_PERMISSIONS);
+
+        // OmniJaws
+        String omnijawsServicePackageName = "org.omnirom.omnijaws";
+        grantSystemFixedPermissionsToSystemPackage(pm, omnijawsServicePackageName, userId, ALWAYS_LOCATION_PERMISSIONS);
 
         // Google App
         grantPermissionsToSystemPackage(pm, "com.google.android.googlequicksearchbox", userId,
