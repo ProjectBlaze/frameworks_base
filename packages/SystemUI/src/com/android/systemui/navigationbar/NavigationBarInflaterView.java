@@ -55,7 +55,9 @@ import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 
-public class NavigationBarInflaterView extends FrameLayout implements TunerService.Tunable {
+public class NavigationBarInflaterView extends FrameLayout
+	implements TunerService.Tunable {
+
     private static final String TAG = "NavBarInflater";
 
     public static final String NAV_BAR_VIEWS = "sysui_nav_bar";
@@ -193,6 +195,12 @@ public class NavigationBarInflaterView extends FrameLayout implements TunerServi
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_INVERSE);
         Dependency.get(TunerService.class).addTunable(this, KEY_NAVIGATION_HINT);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_INVERSE);
     }
 
     @Override
