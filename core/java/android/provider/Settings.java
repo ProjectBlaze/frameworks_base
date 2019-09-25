@@ -5687,6 +5687,9 @@ public final class Settings {
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
                 "lockscreen_quick_unlock_control";
                 
+        /** @hide */
+        public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
+                
         /**
          * Volume keys control cursor in text fields (default is 0)
          * 0 - Disabled
