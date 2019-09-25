@@ -5720,6 +5720,9 @@ public final class Settings {
          */
         public static final String RIGHT_PADDING = "statusbar_right_padding";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
+
         /**
          * Whether to Enable wp zoom
          * @hide
