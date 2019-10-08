@@ -23,6 +23,9 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -53,10 +56,13 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private static final String TAG = "NavBarInflater";
 
-    public static final String NAV_BAR_VIEWS = "sysui_nav_bar";
+    public static final String NAVBAR_LAYOUT_VIEWS =
+            Settings.Secure.NAVBAR_LAYOUT_VIEWS;
+    private static final String NAVBAR_INVERSE_LAYOUT =
+            Settings.Secure.NAVBAR_INVERSE_LAYOUT;
+
     public static final String NAV_BAR_LEFT = "sysui_nav_bar_left";
     public static final String NAV_BAR_RIGHT = "sysui_nav_bar_right";
-    public static final String NAV_BAR_INVERSE = "sysui_nav_bar_inverse";
 
     public static final String MENU_IME_ROTATE = "menu_ime";
     public static final String BACK = "back";
@@ -100,6 +106,7 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private boolean mIsVertical;
     private boolean mAlternativeOrder;
+    private boolean mUsingCustomLayout;
 
     private OverviewProxyService mOverviewProxyService;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
@@ -153,12 +160,14 @@ public class NavigationBarInflaterView extends FrameLayout
     @Override
     public void onNavigationModeChanged(int mode) {
         mNavBarMode = mode;
+        onLikelyDefaultLayoutChange();
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_INVERSE);
+        Dependency.get(TunerService.class).addTunable(this, NAVBAR_INVERSE_LAYOUT);
+        Dependency.get(TunerService.class).addTunable(this, NAVBAR_LAYOUT_VIEWS);
     }
 
     @Override
@@ -170,9 +179,15 @@ public class NavigationBarInflaterView extends FrameLayout
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (NAV_BAR_INVERSE.equals(key)) {
-            mInverseLayout = TunerService.parseIntegerSwitch(newValue, true);
+        if (NAVBAR_INVERSE_LAYOUT.equals(key)) {
+            mInverseLayout = TunerService.parseIntegerSwitch(newValue, false);
             updateLayoutInversion();
+        } else if (NAVBAR_LAYOUT_VIEWS.equals(key)) {
+            if (newValue != null) {
+                setNavigationBarLayout(newValue);
+            } else {
+                setNavigationBarLayout("default");
+            }
         }
     }
 
@@ -182,7 +197,18 @@ public class NavigationBarInflaterView extends FrameLayout
         updateLayoutInversion();
     }
 
+    private void setNavigationBarLayout(String layoutValue) {
+        if (!Objects.equals(mCurrentLayout, layoutValue)) {
+            mUsingCustomLayout = !layoutValue.equals("default");
+            clearViews();
+            inflateLayout(layoutValue);
+        }
+    }
+
     public void onLikelyDefaultLayoutChange() {
+        // Don't override custom layouts
+        if (mUsingCustomLayout) return;
+
         // Reevaluate new layout
         final String newValue = getDefaultLayout();
         if (!Objects.equals(mCurrentLayout, newValue)) {
