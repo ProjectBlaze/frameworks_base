@@ -76,6 +76,7 @@ public class AmbientDisplayConfiguration {
         return pulseOnNotificationEnabled(user)
                 || pulseOnLongPressEnabled(user)
                 || alwaysOnEnabled(user)
+                || isAmbientTickerEnabled(user)
                 || wakeLockScreenGestureEnabled(user)
                 || wakeDisplayGestureEnabled(user)
                 || pickupGestureEnabled(user)
@@ -95,6 +96,11 @@ public class AmbientDisplayConfiguration {
     public boolean pulseOnNotificationAvailable() {
         return mContext.getResources().getBoolean(R.bool.config_pulseOnNotificationsAvailable)
                 && ambientDisplayAvailable();
+    }
+
+    /** @hide */
+    public boolean isAmbientTickerEnabled(int user) {
+        return boolSettingDefaultOn(Settings.Secure.PULSE_ON_NEW_TRACKS, user);
     }
 
     /** @hide */

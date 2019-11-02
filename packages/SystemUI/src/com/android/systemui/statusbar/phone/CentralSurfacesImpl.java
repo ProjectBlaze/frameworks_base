@@ -158,6 +158,7 @@ import com.android.systemui.flags.Flags;
 import com.android.systemui.fragments.ExtensionFragmentListener;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.fragments.FragmentService;
+import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.keyguard.KeyguardUnlockAnimationController;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
@@ -295,6 +296,8 @@ import javax.inject.Provider;
 public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, TunerService.Tunable {
     private static final String QS_TRANSPARENCY =
             "customsystem:" + Settings.System.QS_TRANSPARENCY;
+    private static final String PULSE_ON_NEW_TRACKS =
+            Settings.Secure.PULSE_ON_NEW_TRACKS;
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
     private static final String BANNER_ACTION_SETUP =
@@ -969,8 +972,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
         mKeyguardIndicationController.init();
 
         mColorExtractor.addOnColorsChangedListener(mOnColorsChangedListener);
-
+        
         mTunerService.addTunable(this, QS_TRANSPARENCY);
+        mTunerService.addTunable(this, PULSE_ON_NEW_TRACKS);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
@@ -3490,6 +3494,12 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
             case QS_TRANSPARENCY:
                 mScrimController.setCustomScrimAlpha(
                         TunerService.parseInteger(newValue, 85));
+            case PULSE_ON_NEW_TRACKS:
+                boolean pulseOnNewTracks =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                if (KeyguardSliceProvider.getAttachedInstance() != null) {
+                    KeyguardSliceProvider.getAttachedInstance().setPulseOnNewTracks(pulseOnNewTracks);
+                }
                 break;
             default:
                 break;
