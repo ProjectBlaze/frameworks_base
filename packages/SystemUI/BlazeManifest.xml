@@ -6,6 +6,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.android.systemui">
 
+    <!-- DataSwitch tile -->
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+
     <!-- SystemUI Tuner -->
     <application>
         <activity-alias
