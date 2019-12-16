@@ -5609,7 +5609,18 @@ public final class Settings {
          */
         public static final String NETWORK_TRAFFIC_MODE = "network_traffic_mode";
 
-        /**
+	/**
+         * Whether to blink flashlight for incoming calls
+         * 0 = Disabled (Default)
+         * 1 = Blink flashlight only in Ringer mode
+         * 2 = Blink flashlight only when ringer is not audible
+         * 3 = Blink flashlight always regardless of ringer mode
+         * @hide
+         */
+        @Readable
+        public static final String FLASHLIGHT_ON_CALL = "flashlight_on_call";
+
+	/**
          * Whether to hide navbar pill and keyboard space.
          * Default 0.
          * @hide
@@ -6046,6 +6057,7 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
 	    PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
 	    PRIVATE_SETTINGS.add(AICP_LOCKSCREEN_WEATHER_STYLE);
+            PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
         }
 
         /**
