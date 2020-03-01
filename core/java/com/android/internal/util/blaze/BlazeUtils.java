@@ -257,6 +257,10 @@ public class BlazeUtils {
         return packageNames;
     }
 
+    public static void killForegroundApp() {
+        FireActions.killForegroundApp();
+    }
+
     /**
      * Keep FireAction methods below this point.
      * Place calls to methods above this point.
@@ -314,6 +318,17 @@ public class BlazeUtils {
             if (service != null) {
                 try {
                     service.toggleSettingsPanel();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+	public static void killForegroundApp() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.killForegroundApp();
                 } catch (RemoteException e) {
                     // do nothing.
                 }
