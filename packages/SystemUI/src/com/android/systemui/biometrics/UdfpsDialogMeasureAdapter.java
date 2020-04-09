@@ -19,7 +19,6 @@ package com.android.systemui.biometrics;
 import android.annotation.IdRes;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.graphics.Insets;
 import android.graphics.Rect;
 import android.hardware.biometrics.SensorLocationInternal;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
@@ -29,7 +28,6 @@ import android.view.Surface;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import android.widget.FrameLayout;
@@ -280,8 +278,7 @@ public class UdfpsDialogMeasureAdapter {
     @VisibleForTesting
     static int calculateBottomSpacerHeightForPortrait(
             @NonNull FingerprintSensorPropertiesInternal sensorProperties, int displayHeightPx,
-            int textIndicatorHeightPx, int buttonBarHeightPx, int dialogMarginPx,
-            float scaleFactor) {
+            int textIndicatorHeightPx, int buttonBarHeightPx, int dialogMarginPx, float scaleFactor) {
         final SensorLocationInternal location = sensorProperties.getLocation();
         final int sensorDistanceFromBottom = displayHeightPx
                 - (int) (scaleFactor * location.sensorLocationY)
