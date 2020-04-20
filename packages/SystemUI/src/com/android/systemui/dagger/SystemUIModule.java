@@ -123,6 +123,8 @@ import com.android.systemui.wmshell.BubblesManager;
 import com.android.systemui.R;
 import com.android.wm.shell.bubbles.Bubbles;
 
+import com.android.systemui.qs.dagger.blaze.QSModuleBlaze;
+
 import com.google.android.systemui.smartspace.BcSmartspaceDataProvider;
 import com.google.android.systemui.smartspace.KeyguardMediaViewController;
 import com.google.android.systemui.smartspace.KeyguardSmartspaceController;
@@ -197,7 +199,8 @@ import dagger.Provides;
             UserModule.class,
             UtilModule.class,
             NoteTaskModule.class,
-            WalletModule.class
+            WalletModule.class,
+            QSModuleBlaze.class
         },
         subcomponents = {
             CentralSurfacesComponent.class,
