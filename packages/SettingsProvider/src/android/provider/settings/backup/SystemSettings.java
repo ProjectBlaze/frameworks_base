@@ -98,5 +98,7 @@ public class SystemSettings {
 	Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED,
 	Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE,
         Settings.System.FLASHLIGHT_ON_CALL,
+        Settings.System.FLASHLIGHT_ON_CALL_IGNORE_DND,
+        Settings.System.FLASHLIGHT_ON_CALL_RATE,
     };
 }
