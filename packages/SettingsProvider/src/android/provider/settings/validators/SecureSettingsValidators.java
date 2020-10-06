@@ -348,5 +348,6 @@ public class SecureSettingsValidators {
                 new InclusiveIntegerRangeValidator(0, 7));
         VALIDATORS.put(Secure.BUTTON_BACKLIGHT_TIMEOUT, NON_NEGATIVE_INTEGER_VALIDATOR);
         VALIDATORS.put(Secure.BUTTON_BRIGHTNESS, NON_NEGATIVE_INTEGER_VALIDATOR);
+        VALIDATORS.put(Secure.KEYBOARD_BRIGHTNESS, NON_NEGATIVE_INTEGER_VALIDATOR);
     }
 }
