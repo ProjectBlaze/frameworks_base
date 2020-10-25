@@ -169,6 +169,8 @@ interface IStatusBarService
      */
     void toggleCameraFlash();
 
+    void screenPinningStateChanged(boolean enabled);
+
     /**
      * Used to block or unblock usage of gestural navigation
      */
