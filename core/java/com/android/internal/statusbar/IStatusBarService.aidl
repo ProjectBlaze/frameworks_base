@@ -232,4 +232,5 @@ interface IStatusBarService
 
     /** Project Blaze additions. */
     void toggleCameraFlash();
+    void screenPinningStateChanged(boolean enabled);
 }
