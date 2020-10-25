@@ -325,4 +325,6 @@ oneway interface IStatusBar
 
     /** Project Blaze additions. */
     void toggleCameraFlash();
+    void screenPinningStateChanged(boolean enabled);
+    void leftInLandscapeChanged(boolean isLeft);
 }
