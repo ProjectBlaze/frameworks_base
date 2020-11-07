@@ -232,4 +232,9 @@ interface IStatusBarService
     void showRearDisplayDialog(int currentBaseState);
 
     void screenPinningStateChanged(boolean enabled);
+
+    /**
+     * Starts the default assistant app.
+     */
+    void startAssist(in Bundle args);
 }
