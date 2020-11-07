@@ -229,6 +229,7 @@ interface IStatusBarService
     void unregisterNearbyMediaDevicesProvider(in INearbyMediaDevicesProvider provider);
 
     /** Project Blaze additions. */
+    void startAssist(in Bundle args);
     void toggleCameraFlash();
     void toggleRecentApps();
     void toggleSplitScreen();
