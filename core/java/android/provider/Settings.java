@@ -5643,6 +5643,18 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_MEDIA_BLUR = "lockscreen_media_blur";
+        
+        /**
+         * reTicker Status
+         * @hide
+         */
+        public static final String RETICKER_STATUS = "reticker_status";
+
+        /**
+         * reTicker Colored
+         * @hide
+         */
+        public static final String RETICKER_COLORED = "reticker_colored";
 
         /**
          * Whether to show data usage in qs footer
