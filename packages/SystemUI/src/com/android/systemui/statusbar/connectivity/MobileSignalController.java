@@ -137,6 +137,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     // VoWiFi Icon Style
     private int mVoWiFistyle;
 
+    private boolean mIsVowifiAvailable;
+
     private final MobileStatusTracker.Callback mMobileCallback =
             new MobileStatusTracker.Callback() {
                 private String mLastStatus;
