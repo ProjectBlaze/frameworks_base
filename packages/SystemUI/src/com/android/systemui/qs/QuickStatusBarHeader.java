@@ -295,6 +295,12 @@ public class QuickStatusBarHeader extends FrameLayout implements
                 R.dimen.rounded_corner_content_padding);
 
         int statusBarHeight = SystemBarUtils.getStatusBarHeight(mContext);
+        mStatusBarPaddingStart = resources.getDimensionPixelSize(
+                R.dimen.status_bar_padding_start);
+        mStatusBarPaddingEnd = resources.getDimensionPixelSize(
+                R.dimen.status_bar_padding_end);
+
+        int qsOffsetHeight = SystemBarUtils.getQuickQsOffsetHeight(mContext);
 
         mStatusBarPaddingTop = resources.getDimensionPixelSize(
                 R.dimen.status_bar_padding_top);
@@ -390,9 +396,9 @@ public class QuickStatusBarHeader extends FrameLayout implements
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
                 // Use statusbar paddings when collapsed,
                 // align with QS when expanded, and animate translation
-                .addFloat(isLayoutRtl() ? mRightLayout : mClockContainer, "translationX",
+                .addFloat(mClockContainer, "translationX",
                     mHeaderPaddingLeft + mStatusBarPaddingStart, 0)
-                .addFloat(isLayoutRtl() ? mClockContainer: mRightLayout, "translationX",
+                .addFloat(mRightLayout, "translationX",
                     -(mHeaderPaddingRight + mStatusBarPaddingEnd), 0)
                 .setListener(new TouchAnimator.ListenerAdapter() {
                     @Override
@@ -591,11 +597,11 @@ public class QuickStatusBarHeader extends FrameLayout implements
             updateAnimators();
         }
         mDatePrivacyView.setPadding(mHeaderPaddingLeft + mStatusBarPaddingStart,
-                mStatusBarPaddingTop,
+                mWaterfallTopInset,
                 mHeaderPaddingRight + mStatusBarPaddingEnd,
                 0);
         mStatusIconsView.setPadding(0,
-                mStatusBarPaddingTop,
+                mWaterfallTopInset,
                 0,
                 0);
     }
