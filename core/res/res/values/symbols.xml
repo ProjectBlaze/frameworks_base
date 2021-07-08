@@ -4914,4 +4914,7 @@
 
   <!-- Whether to show weather on the lockscreen by default. -->
   <java-symbol type="bool" name="config_lockscreenWeatherEnabledByDefault" />
+
+  <!-- For dynamic default font styles -->
+  <java-symbol type="string" name="config_bodyFontFamily" />
 </resources>
