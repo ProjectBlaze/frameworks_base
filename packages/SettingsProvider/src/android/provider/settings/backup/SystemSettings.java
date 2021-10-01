@@ -92,5 +92,6 @@ public class SystemSettings {
         Settings.System.LOCKSCREEN_SMALL_CLOCK,
 	Settings.System.SCREEN_OFF_FOD,
         Settings.System.VOLUME_PANEL_ON_LEFT,
+        Settings.System.BATTERY_LEVEL_COLORS,
     };
 }
