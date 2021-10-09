@@ -623,6 +623,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private int mCurrentUserId;
 
+    private AssistUtils mAssistUtils;
+
     // Maps global key codes to the components that will handle them.
     private GlobalKeyManager mGlobalKeyManager;
 
@@ -1328,6 +1330,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private boolean hasAssistant() {
+        return mAssistUtils.getAssistComponentForUser(mCurrentUserId) != null;
+    }
+
     private int getResolvedLongPressOnPowerBehavior() {
         if (FactoryTest.isLongPressOnPowerOffEnabled()) {
             return LONG_PRESS_POWER_SHUT_OFF_NO_CONFIRM;
@@ -1335,7 +1341,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // If the config indicates the assistant behavior but the device isn't yet provisioned, show
         // global actions instead.
-        if (mLongPressOnPowerBehavior == LONG_PRESS_POWER_ASSISTANT && !isDeviceProvisioned()) {
+        if (mLongPressOnPowerBehavior == LONG_PRESS_POWER_ASSISTANT &&
+                (!isDeviceProvisioned() || !hasAssistant())) {
             return LONG_PRESS_POWER_GLOBAL_ACTIONS;
         }
 
@@ -2148,6 +2155,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mVibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         mSafeModeEnabledVibePattern = getLongIntArray(mContext.getResources(),
                 com.android.internal.R.array.config_safeModeEnabledVibePattern);
+
+        mAssistUtils = new AssistUtils(context);
 
         mGlobalKeyManager = new GlobalKeyManager(mContext);
 
