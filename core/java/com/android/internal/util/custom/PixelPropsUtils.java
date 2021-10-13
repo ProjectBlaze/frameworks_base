@@ -57,6 +57,8 @@ public class PixelPropsUtils {
             "com.google.pixel.livewallpaper",
             "com.google.android.apps.safetyhub",
             "com.google.android.apps.turbo",
+            "com.google.android.apps.wallpaper",
+            "com.google.android.apps.googleassistant",
             "com.google.android.apps.maps",
             "com.google.android.gms",
             "com.google.android.gms",
