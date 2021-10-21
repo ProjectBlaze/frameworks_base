@@ -211,5 +211,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.USE_OLD_MOBILETYPE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.FORCE_FULLSCREEN_CUTOUT_APPS, ANY_STRING_VALIDATOR);
         VALIDATORS.put(System.SWIPE_TO_SCREENSHOT, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.TORCH_POWER_BUTTON_GESTURE, new InclusiveIntegerRangeValidator(0, 2));
     }
 }
