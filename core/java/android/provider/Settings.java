@@ -10934,6 +10934,14 @@ public final class Settings {
         public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
 
         /**
+         * Change quick settings tiles vibration duration (in milliseconds)
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_VIBRATE_DURATION =
+                "quick_settings_vibrate_duration";
+
+        /**
          * Change quick settings tiles animation style
          *
          * @hide
