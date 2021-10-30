@@ -28,7 +28,7 @@ public class PixelPropsUtils {
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
 
-    private static final Map<String, Object> propsToChange;
+    private static final Map<String, Object> propsToChangeLatest;
     private static final Map<String, Object> propsToChangePixelXL;
     private static final Map<String, Object> propsToChangePixel3XL;
 
@@ -74,13 +74,13 @@ public class PixelPropsUtils {
     };
 
     static {
-        propsToChange = new HashMap<>();
-        propsToChange.put("BRAND", "google");
-        propsToChange.put("MANUFACTURER", "Google");
-        propsToChange.put("DEVICE", "redfin");
-        propsToChange.put("PRODUCT", "redfin");
-        propsToChange.put("MODEL", "Pixel 5");
-        propsToChange.put("FINGERPRINT", "google/redfin/redfin:12/SPB5.210812.002/7671067:user/release-keys");
+        propsToChangeLatest = new HashMap<>();
+        propsToChangeLatest.put("BRAND", "google");
+        propsToChangeLatest.put("MANUFACTURER", "Google");
+        propsToChangeLatest.put("DEVICE", "raven");
+        propsToChangeLatest.put("PRODUCT", "raven");
+        propsToChangeLatest.put("MODEL", "Pixel 6 Pro");
+        propsToChangeLatest.put("FINGERPRINT", "google/raven/raven:12/SD1A.210817.015.A4/7697517:user/release-keys");
         propsToChangePixelXL = new HashMap<>();
         propsToChangePixelXL.put("BRAND", "google");
         propsToChangePixelXL.put("MANUFACTURER", "Google");
@@ -105,7 +105,7 @@ public class PixelPropsUtils {
             if (DEBUG){
                 Log.d(TAG, "Defining props for: " + packageName);
             }
-            for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
+            for (Map.Entry<String, Object> prop : propsToChangeLatest.entrySet()) {
                 String key = prop.getKey();
                 Object value = prop.getValue();
                 // Don't set model if gms
