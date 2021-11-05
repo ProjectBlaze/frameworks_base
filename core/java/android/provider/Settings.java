@@ -11103,6 +11103,13 @@ public final class Settings {
                 "device_state_rotation_lock";
 
         /**
+         * Whether to hide clock when launcher is visible
+         * default: false
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_AUTO_HIDE = "status_bar_clock_auto_hide";
+
+        /**
          * Control whether communal mode is allowed on this device.
          *
          * @hide
