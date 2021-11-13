@@ -62,7 +62,17 @@ public class PixelPropsUtils {
             "com.google.android.apps.maps",
             "com.google.android.gms",
             "com.google.android.gms",
-            "com.google.android.apps.nexuslauncher"
+            "com.google.android.apps.nexuslauncher",
+            "com.android.chrome",
+            "com.google.android.apps.maps",
+            "com.google.android.apps.docs",
+            "com.google.android.gm",
+            "com.google.android.apps.translate",
+            "com.google.android.apps.meetings",
+            "com.google.android.calendar",
+            "com.google.ar.lens",
+            "com.google.android.keep",
+	    "com.google.android.calculator"
     };
 
     private static final String[] packagesToChangePixelXL = {
