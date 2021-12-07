@@ -5591,6 +5591,13 @@ public final class Settings {
          */
         public static final String SWIPE_TO_SCREENSHOT = "swipe_to_screenshot";
 
+	/**
+         * Whether to hide navbar pill and keyboard space.
+         * Default 0.
+         * @hide
+         */
+        public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
