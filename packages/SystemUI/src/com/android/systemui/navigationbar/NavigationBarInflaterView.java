@@ -20,7 +20,9 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_3BUTTON;
 
 import android.annotation.Nullable;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.om.IOverlayManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
 import android.os.RemoteException;
@@ -91,6 +93,8 @@ public class NavigationBarInflaterView extends FrameLayout
     private static final String ABSOLUTE_SUFFIX = "A";
     private static final String ABSOLUTE_VERTICAL_CENTERED_SUFFIX = "C";
 
+    private static final String OVERLAY_NAVIGATION_FULL_SCREEN = "com.custom.overlay.systemui.navbar.gestural";
+
     protected LayoutInflater mLayoutInflater;
     protected LayoutInflater mLandscapeInflater;
 
@@ -112,7 +116,7 @@ public class NavigationBarInflaterView extends FrameLayout
     private String mNavBarLayout;
 
     private boolean mInverseLayout;
-    private int mHomeHandleWidthMode = 0;
+    private int mHomeHandleWidthMode = 1;
 
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -157,6 +161,9 @@ public class NavigationBarInflaterView extends FrameLayout
                 : mOverviewProxyService.shouldShowSwipeUpUI()
                         ? R.string.config_navBarLayoutQuickstep
                         : R.string.config_navBarLayout;
+        if (mHomeHandleWidthMode == 0 && defaultResource == R.string.config_navBarLayoutHandle) {
+            return getContext().getString(defaultResource).replace(HOME_HANDLE, "");
+        }
         return getContext().getString(defaultResource);
     }
 
@@ -182,6 +189,7 @@ public class NavigationBarInflaterView extends FrameLayout
             if (QuickStepContract.isGesturalMode(mNavBarMode)) {
                 clearViews();
                 inflateLayout(getDefaultLayout());
+                updateNavbar(mHomeHandleWidthMode);
             }
         }
     }
@@ -265,6 +273,21 @@ public class NavigationBarInflaterView extends FrameLayout
     private void updateAlternativeOrder(View v) {
         if (v instanceof ReverseLinearLayout) {
             ((ReverseLinearLayout) v).setAlternativeOrder(mAlternativeOrder);
+        }
+    }
+
+    private void updateNavbar(int mode) {
+        final IOverlayManager iom = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
+        final boolean state = mode == 0;
+        final int userId = ActivityManager.getCurrentUser();
+        try {
+            iom.setEnabled(OVERLAY_NAVIGATION_FULL_SCREEN, state, userId);
+            if (state) {
+                iom.setHighestPriority(OVERLAY_NAVIGATION_FULL_SCREEN, userId);
+            }
+        } catch (RemoteException re) {
+            throw re.rethrowFromSystemServer();
         }
     }
 
@@ -457,11 +480,11 @@ public class NavigationBarInflaterView extends FrameLayout
         } else if (HOME_HANDLE.equals(button)) {
             v = inflater.inflate(R.layout.home_handle, parent, false);
             final ViewGroup.LayoutParams lp = v.getLayoutParams();
-            if (mHomeHandleWidthMode == 1) {
+            if (mHomeHandleWidthMode == 2) {
                 lp.width = getResources().getDimensionPixelSize(
                     R.dimen.navigation_home_handle_width_medium);
                 v.setLayoutParams(lp);
-            } else if (mHomeHandleWidthMode == 2) {
+            } else if (mHomeHandleWidthMode == 3) {
                 lp.width = getResources().getDimensionPixelSize(
                     R.dimen.navigation_home_handle_width_long);
                 v.setLayoutParams(lp);
