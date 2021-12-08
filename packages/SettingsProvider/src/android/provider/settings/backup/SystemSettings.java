@@ -94,6 +94,5 @@ public class SystemSettings {
         Settings.System.STATUS_BAR_NOTIF_COUNT,
         Settings.System.SENSOR_BLOCK,
         Settings.System.ENABLE_RIPPLE_EFFECT,
-        Settings.System.FULLSCREEN_GESTURES,
     };
 }
