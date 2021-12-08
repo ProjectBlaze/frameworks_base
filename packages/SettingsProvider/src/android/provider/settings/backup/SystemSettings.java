@@ -92,6 +92,5 @@ public class SystemSettings {
 	Settings.System.ENABLE_RIPPLE_EFFECT,
         Settings.System.TORCH_POWER_BUTTON_GESTURE,
         Settings.System.USE_OLD_MOBILETYPE,
-        Settings.System.FULLSCREEN_GESTURES,
     };
 }
