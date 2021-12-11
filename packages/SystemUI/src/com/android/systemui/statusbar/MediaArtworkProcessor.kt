@@ -98,4 +98,11 @@ class MediaArtworkProcessor @Inject constructor() {
         mArtworkCache?.recycle()
         mArtworkCache = null
     }
+
+    companion object {
+        private const val TAG = "MediaArtworkProcessor"
+        private const val COLOR_ALPHA = 178 // 255 * 0.6
+//        private const val BLUR_RADIUS = 20f
+        private const val DOWNSAMPLE = 5
+    }
 }
