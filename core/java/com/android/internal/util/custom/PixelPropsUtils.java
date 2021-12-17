@@ -72,7 +72,11 @@ public class PixelPropsUtils {
             "com.google.android.calendar",
             "com.google.ar.lens",
             "com.google.android.keep",
-	    "com.google.android.calculator"
+	    "com.google.android.calculator",
+            "com.amazon.avod.thirdpartyclient",
+            "com.disney.disneyplus",
+            "com.netflix.mediaclient",
+            "in.startv.hotstar"
     };
 
     private static final String[] packagesToChangePixelXL = {
