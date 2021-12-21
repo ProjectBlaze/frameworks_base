@@ -24,6 +24,7 @@ import android.graphics.Point
 import android.hardware.biometrics.BiometricFingerprintConstants
 import android.hardware.biometrics.BiometricSourceType
 import androidx.annotation.VisibleForTesting
+import android.provider.Settings
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
 import com.android.settingslib.Utils
@@ -305,11 +306,17 @@ class AuthRippleController @Inject constructor(
     private val udfpsControllerCallback =
         object : UdfpsController.Callback {
             override fun onFingerDown() {
-                showDwellRipple()
+                if (Settings.System.getInt(sysuiContext.contentResolver,
+                       Settings.System.UDFPS_ANIM, 0) == 0) {
+                    showDwellRipple()
+                }
             }
 
             override fun onFingerUp() {
+                if (Settings.System.getInt(sysuiContext.contentResolver,
+                        Settings.System.UDFPS_ANIM, 0) == 0) {
                 mView.retractDwellRipple()
+                }
             }
         }
 
