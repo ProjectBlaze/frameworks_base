@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.protonaosp.systemui.theme
+package com.blaze.android.systemui.theme
 
 import android.annotation.ColorInt
 import android.app.WallpaperColors
@@ -66,7 +66,7 @@ import kotlin.math.log10
 import kotlin.math.pow
 
 @SysUISingleton
-class CustomThemeOverlayController @Inject constructor(
+class BlazeThemeOverlayController @Inject constructor(
     private val context: Context,
     broadcastDispatcher: BroadcastDispatcher,
     @Background bgHandler: Handler,
@@ -240,8 +240,15 @@ class CustomThemeOverlayController @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "CustomThemeOverlayController"
-        private const val DEBUG = false
+        private const val TAG = "BlazeThemeOverlayController"
+	private const val DEBUG = false
+        private const val PREF_PREFIX = "monet_engine"
+        private const val PREF_CUSTOM_COLOR = "${PREF_PREFIX}_custom_color"
+        private const val PREF_COLOR_OVERRIDE = "${PREF_PREFIX}_color_override"
+        private const val PREF_CHROMA_FACTOR = "${PREF_PREFIX}_chroma_factor"
+        private const val PREF_ACCURATE_SHADES = "${PREF_PREFIX}_accurate_shades"
+        private const val PREF_LINEAR_LIGHTNESS = "${PREF_PREFIX}_linear_lightness"
+        private const val PREF_WHITE_LUMINANCE = "${PREF_PREFIX}_white_luminance_user"
 
         private const val WHITE_LUMINANCE_MIN = 1.0
         private const val WHITE_LUMINANCE_MAX = 10000.0
