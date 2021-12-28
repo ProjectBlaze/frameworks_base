@@ -7,6 +7,9 @@ import com.android.systemui.dagger.SystemUIBinder;
 import com.android.systemui.dagger.SysUIComponent;
 import com.android.systemui.dagger.SystemUIModule;
 
+import com.blaze.android.systemui.keyguard.BlazeKeyguardSliceProvider;
+import com.blaze.android.systemui.smartspace.KeyguardSmartspaceController;
+
 import dagger.Subcomponent;
 
 @SysUISingleton
@@ -22,4 +25,12 @@ public interface BlazeSysUIComponent extends SysUIComponent {
     interface Builder extends SysUIComponent.Builder {
         BlazeSysUIComponent build();
     }
+
+    /**
+     * Member injection into the supplied argument.
+     */
+    void inject(BlazeKeyguardSliceProvider keyguardSliceProvider);
+
+    @SysUISingleton
+    KeyguardSmartspaceController createKeyguardSmartspaceController();
 }
