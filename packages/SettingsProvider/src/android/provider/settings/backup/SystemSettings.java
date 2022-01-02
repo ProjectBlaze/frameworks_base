@@ -89,5 +89,6 @@ public class SystemSettings {
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.KEYGAURD_MEDIA_ART,
         Settings.System.ENABLE_RIPPLE_EFFECT,
+        Settings.System.LOCKSCREEN_SMALL_CLOCK,
     };
 }
