@@ -5593,6 +5593,12 @@ public final class Settings {
          */
         public static final String SWIPE_TO_SCREENSHOT = "swipe_to_screenshot";
 
+	/**
+         * Defines the screen-off animation to display
+         * @hide
+         */
+        public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
