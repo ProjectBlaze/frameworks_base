@@ -67,6 +67,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import com.android.internal.util.custom.GamesPropsUtils;
 
 /**
  * Base class for implementing application instrumentation code.  When running
@@ -1283,6 +1284,7 @@ public class Instrumentation {
                 .instantiateApplication(cl, className);
         app.attach(context);
         PropImitationHooks.setProps(app);
+        GamesPropsUtils.setProps(packageName);
         return app;
     }
     
@@ -1301,6 +1303,7 @@ public class Instrumentation {
         Application app = (Application)clazz.newInstance();
         app.attach(context);
         PropImitationHooks.setProps(app);
+        GamesPropsUtils.setProps(packageName);
         return app;
     }
 
