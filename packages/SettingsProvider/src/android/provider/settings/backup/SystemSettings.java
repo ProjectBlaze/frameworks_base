@@ -93,5 +93,6 @@ public class SystemSettings {
 	Settings.System.SCREEN_OFF_FOD,
         Settings.System.VOLUME_PANEL_ON_LEFT,
         Settings.System.BATTERY_LEVEL_COLORS,
+        Settings.System.QS_SHOW_BATTERY_ESTIMATE,
     };
 }
