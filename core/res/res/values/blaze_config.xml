@@ -137,4 +137,7 @@
         <item>org.codeaurora.gallery</item>
         <item>com.android.calculator2</item>
     </string-array>
+
+        <!-- Whether to force enable multi resolution configuration for camera -->
+        <bool name="config_forceMultiResolution">false</bool>
 </resources>
