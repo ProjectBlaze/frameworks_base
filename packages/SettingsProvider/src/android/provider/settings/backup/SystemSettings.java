@@ -93,5 +93,6 @@ public class SystemSettings {
         Settings.System.VOLUME_KEY_CURSOR_CONTROL,
         Settings.System.STATUS_BAR_NOTIF_COUNT,
         Settings.System.SENSOR_BLOCK,
+        Settings.System.ENABLE_RIPPLE_EFFECT
     };
 }
