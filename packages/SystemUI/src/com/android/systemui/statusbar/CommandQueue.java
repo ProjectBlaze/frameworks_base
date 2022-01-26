@@ -1886,8 +1886,8 @@ public class CommandQueue extends IStatusBar.Stub implements
                 case MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).leftInLandscapeChanged(msg.arg1 != 0);
-                    }
-                    break;
+		    }
+		    break;
             }
         }
     }
