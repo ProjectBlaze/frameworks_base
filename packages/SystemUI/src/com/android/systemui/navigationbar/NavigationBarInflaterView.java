@@ -106,10 +106,10 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private boolean mIsVertical;
     private boolean mAlternativeOrder;
-    private boolean mUsingCustomLayout;
 
     private OverviewProxyService mOverviewProxyService;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
+    private String mNavBarLayout;
 
     private boolean mInverseLayout;
 
@@ -183,10 +183,9 @@ public class NavigationBarInflaterView extends FrameLayout
             mInverseLayout = TunerService.parseIntegerSwitch(newValue, false);
             updateLayoutInversion();
         } else if (NAVBAR_LAYOUT_VIEWS.equals(key)) {
-            if (newValue != null) {
-                setNavigationBarLayout(newValue);
-            } else {
-                setNavigationBarLayout("default");
+            mNavBarLayout = (String) newValue;
+            if (!QuickStepContract.isGesturalMode(mNavBarMode)) {
+                setNavigationBarLayout(mNavBarLayout);
             }
         }
     }
@@ -199,21 +198,15 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private void setNavigationBarLayout(String layoutValue) {
         if (!Objects.equals(mCurrentLayout, layoutValue)) {
-            mUsingCustomLayout = !layoutValue.equals("default");
             clearViews();
             inflateLayout(layoutValue);
         }
     }
 
     public void onLikelyDefaultLayoutChange() {
-        // Don't override custom layouts
-        if (mUsingCustomLayout) return;
-
-        // Reevaluate new layout
-        final String newValue = getDefaultLayout();
-        if (!Objects.equals(mCurrentLayout, newValue)) {
-            clearViews();
-            inflateLayout(newValue);
+        setNavigationBarLayout(getDefaultLayout());
+        if (!QuickStepContract.isGesturalMode(mNavBarMode)) {
+            setNavigationBarLayout(mNavBarLayout);
         }
     }
 
