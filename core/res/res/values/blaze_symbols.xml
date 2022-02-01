@@ -104,4 +104,8 @@
    <!-- Status bar DT2S gesture -->
    <java-symbol type="bool" name="config_dt2sGestureAvailable" />
    <java-symbol type="bool" name="config_dt2sGestureEnabledByDefault" />
+
+   <!-- App lock -->
+   <java-symbol type="string" name="unlock_application" />
+   <java-symbol type="array" name="config_appLockAllowedSystemApps" />
 </resources>
