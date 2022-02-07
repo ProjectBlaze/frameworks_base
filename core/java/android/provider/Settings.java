@@ -5575,6 +5575,21 @@ public final class Settings {
         public static final String SHOW_QS_DATE = "show_qs_date";
 
         /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM = "udfps_anim";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM_STYLE = "udfps_anim_style";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ICON = "udfps_icon";
+
+        /**
          * These are all public system settings
          *
          * @hide
