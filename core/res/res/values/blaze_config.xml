@@ -194,8 +194,27 @@
 
     <!-- List of system apps that are allowed to be locked with app lock.
         Use with extreme caution. -->
-  <string-array name="config_appLockAllowedSystemApps" translatable="false" />
+    <string-array name="config_appLockAllowedSystemApps" translatable="false" />
 
-  <!-- Whether to cancel fingerprint operation if not idle -->
-  <bool name="config_fpCancelIfNotIdle">false</bool>
+    <!-- Whether to cancel fingerprint operation if not idle -->
+    <bool name="config_fpCancelIfNotIdle">false</bool>
+
+    <!-- These are system packages exempted from privacy indicator -->
+    <string-array name="config_indicatorExemptedPackageNames" translatable="false">
+        <item>com.android.bluetooth</item>
+        <item>com.android.cellbroadcastservice</item>
+        <item>com.android.mms.service</item>
+        <item>com.android.networkstack.tethering</item>
+        <item>com.android.ons</item>
+        <item>com.android.phone</item>
+        <item>com.android.printspooler</item>
+        <item>com.android.providers.telephony</item>
+        <item>com.android.stk</item>
+        <item>com.android.systemui</item>
+        <item>com.google.android.settings.intelligence</item>
+        <item>com.mediatek.ims</item>
+        <item>com.qualcomm.qti.cne</item>
+        <item>com.shannon.imsservice</item>
+        <item>org.pixelexperience.faceunlock</item>
+  </string-array>
 </resources>
