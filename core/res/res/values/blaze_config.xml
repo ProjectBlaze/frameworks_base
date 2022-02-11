@@ -24,4 +24,9 @@
 
     <!-- Name of a font family to use as regular font. For theming purpose. -->
     <string name="config_regularFontFamily" translatable="false">sans-serif-regular</string>
+
+    <!-- Array containing custom error messages from vendor. -->
+    <string-array name="face_error_vendor" translatable="false">
+        <item>@string/face_unlock_disabled_idle</item>
+    </string-array>
 </resources>
