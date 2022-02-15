@@ -83,6 +83,11 @@ public class SyncTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    public void handleLongClick(@Nullable View view) {
+        // Do nothing
+    }
+
+    @Override
     public CharSequence getTileLabel() {
         return mContext.getString(R.string.quick_settings_sync_label);
     }
