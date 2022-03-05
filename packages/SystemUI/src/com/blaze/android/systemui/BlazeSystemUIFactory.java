@@ -2,7 +2,6 @@ package com.blaze.android.systemui;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Handler;
 
 import com.blaze.android.systemui.dagger.BlazeGlobalRootComponent;
 import com.blaze.android.systemui.dagger.BlazeSysUIComponent;
