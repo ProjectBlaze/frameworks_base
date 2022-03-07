@@ -87,4 +87,7 @@
     <string name="screenrecord_skip_time_label">Skip timer</string>
     <string name="screenrecord_skip_time_summary">Remove 3 second wait</string>
     <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
+
+    <!-- Name of the roaming status bar icon. -->
+    <string name="status_bar_roaming">Roaming indicator</string>
 </resources>
