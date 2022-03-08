@@ -5953,6 +5953,12 @@ public final class Settings {
          * @hide
          */
         public static final String NAVIGATION_BAR_MENU_ARROW_KEYS = "navigation_bar_menu_arrow_keys";
+        
+        /** 
+         * Navbar style
+         * @hide
+         */
+        public static final String NAVBAR_STYLE = "navbar_style";
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
