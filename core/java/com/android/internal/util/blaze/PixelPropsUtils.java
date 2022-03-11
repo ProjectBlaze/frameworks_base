@@ -58,7 +58,8 @@ public class PixelPropsUtils {
     private static final String[] extraPackagesToChange = {
             "com.android.chrome",
             "com.android.vending",
-            "com.breel.wallpapers20"
+            "com.breel.wallpapers20",
+            "com.snapchat.android"
     };
 
     private static final Map<String, Object> propsToChangeROG1;
