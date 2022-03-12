@@ -80,7 +80,7 @@ public class PixelPropsUtils {
         propsToChangeLatest.put("DEVICE", "raven");
         propsToChangeLatest.put("PRODUCT", "raven");
         propsToChangeLatest.put("MODEL", "Pixel 6 Pro");
-        propsToChangeLatest.put("FINGERPRINT", "google/raven/raven:12/SD1A.210817.015.A4/7697517:user/release-keys");
+        propsToChangeLatest.put("FINGERPRINT", "google/raven/raven:12/SD1A.210817.036/7805805:user/release-keys");
         propsToChangePixelXL = new HashMap<>();
         propsToChangePixelXL.put("BRAND", "google");
         propsToChangePixelXL.put("MANUFACTURER", "Google");
@@ -94,7 +94,7 @@ public class PixelPropsUtils {
         propsToChangePixel3XL.put("DEVICE", "crosshatch");
         propsToChangePixel3XL.put("PRODUCT", "crosshatch");
         propsToChangePixel3XL.put("MODEL", "Pixel 3 XL");
-        propsToChangePixel3XL.put("FINGERPRINT", "google/crosshatch/crosshatch:12/SPB5.210812.002/7671067:user/release-keys");
+        propsToChangePixel3XL.put("FINGERPRINT", "google/crosshatch/crosshatch:12/SP1A.210812.015/7679548:user/release-keys");
     }
 
     public static void setProps(String packageName) {
