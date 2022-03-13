@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.evolution.EvolutionUtils;
+import com.android.internal.util.blaze.BlazeUtils;
 
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -65,7 +65,7 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.EVO_QS_TILES;
+        return MetricsEvent.BLAZE_HOUSE;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
 
         //finish collapsing the panel
         mUiHandler.postDelayed(() -> {
-            EvolutionUtils.takeScreenshot(mRegion ? false : true);
+            BlazeUtils.takeScreenshot(mRegion ? false : true);
         }, 1000/*timeout*/);
     }
 
