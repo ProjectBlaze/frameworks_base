@@ -2249,10 +2249,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         @Override
         void onLongPress(KeyEvent keyEvent) {
-            if (mSingleKeyGestureDetector.beganFromNonInteractive()
-                    && !mSupportLongPressPowerWhenNonInteractive) {
-                Slog.v(TAG, "Not support long press power when device is not interactive.");
-                return;
+            if (mSingleKeyGestureDetector.beganFromNonInteractive()) {
+                if (handleTorchPress(true))
+                    return;
+                if (!mSupportLongPressPowerWhenNonInteractive) {
+                    Slog.v(TAG, "Not support long press power when device is not interactive.");
+                    return;
+                }
             }
 
             powerLongPress(keyEvent.getEventTime());
@@ -2266,8 +2269,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         @Override
         void onMultiPress(long downTime, int count) {
-            if (mSingleKeyGestureDetector.beganFromNonInteractive() ||
-                         (mTorchActionMode != 0 && isFlashLightIsOn())) {
+            if (mSingleKeyGestureDetector.beganFromNonInteractive()) {
                 if (handleTorchPress(false)) {
                     mSingleKeyGestureDetector.reset();
                     return;
