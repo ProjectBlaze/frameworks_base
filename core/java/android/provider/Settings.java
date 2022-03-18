@@ -11690,7 +11690,7 @@ public final class Settings {
                 "nav_bar_button_swap_enabled";
 
         /**
-         * Parameter for locking immersive system bars.
+        * Parameter for locking immersive system bars.
          *
          * The value "1", don't open Translucent StatusBar and NavigationBar on Immersive mode.
          * The value "0", restore to system default behavior.
@@ -11721,6 +11721,13 @@ public final class Settings {
          */
         public static final String POCKET_MODE_ENABLED
                 = "pocket_mode_enabled";
+
+        /**
+         * Control whether FLAG_SECURE is ignored for all windows.
+         * @hide
+         */
+        @Readable
+        public static final String WINDOW_IGNORE_SECURE = "window_ignore_secure";
 
         /**
          * These entries are considered common between the personal and the managed profile,
