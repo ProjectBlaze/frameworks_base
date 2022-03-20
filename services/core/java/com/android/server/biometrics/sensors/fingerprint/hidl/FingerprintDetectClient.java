@@ -72,7 +72,7 @@ class FingerprintDetectClient extends AcquisitionClient<IBiometricsFingerprint>
 
     @Override
     protected void stopHalOperation() {
-        mSensorOverlays.hide(getSensorId());
+        mSensorOverlays.hide(getFreshDaemon(), getSensorId());
 
         try {
             getFreshDaemon().cancel();
@@ -92,7 +92,7 @@ class FingerprintDetectClient extends AcquisitionClient<IBiometricsFingerprint>
 
     @Override
     protected void startHalOperation() {
-        mSensorOverlays.show(getSensorId(), BiometricOverlayConstants.REASON_AUTH_KEYGUARD, this);
+        mSensorOverlays.show(getFreshDaemon(), getSensorId(), BiometricOverlayConstants.REASON_AUTH_KEYGUARD, this);
 
         try {
             getFreshDaemon().authenticate(0 /* operationId */, getTargetUserId());
@@ -100,7 +100,7 @@ class FingerprintDetectClient extends AcquisitionClient<IBiometricsFingerprint>
             Slog.e(TAG, "Remote exception when requesting auth", e);
             onError(BiometricFingerprintConstants.FINGERPRINT_ERROR_HW_UNAVAILABLE,
                     0 /* vendorCode */);
-            mSensorOverlays.hide(getSensorId());
+            mSensorOverlays.hide(getFreshDaemon(), getSensorId());
             mCallback.onClientFinished(this, false /* success */);
         }
     }
