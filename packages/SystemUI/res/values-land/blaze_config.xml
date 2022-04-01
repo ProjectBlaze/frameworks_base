@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2023 ProjectBlaze
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+
+    <!-- The maximum number of tiles in the QuickQSPanel -->
+    <integer name="quick_qs_panel_max_tiles">6</integer>
+</resources>
