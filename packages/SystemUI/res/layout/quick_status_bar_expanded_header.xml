@@ -41,8 +41,8 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:focusable="true"
+        android:paddingTop="20dp"
         android:paddingBottom="@dimen/qqs_layout_padding_bottom"
         android:importantForAccessibility="no">
     </com.android.systemui.qs.QuickQSPanel>
-
 </com.android.systemui.qs.QuickStatusBarHeader>
