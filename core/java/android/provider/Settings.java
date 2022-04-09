@@ -5609,6 +5609,15 @@ public final class Settings {
          */
         public static final String NETWORK_TRAFFIC_MODE = "network_traffic_mode";
 
+        /**
+         * Should we listen for fingerprints when the screen is off?  Devices
+         * with a rear-mounted sensor want this, but certain devices have
+         * the sensor embedded in the power key and listening all the time
+         * causes a poor experience.
+         * @hide
+         */
+        public static final String FP_WAKE_UNLOCK = "fp_wake_unlock";
+
 	/**
          * Whether to blink flashlight for incoming calls
          * 0 = Disabled (Default)
@@ -6103,6 +6112,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_IGNORE_DND);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_RATE);
+            PRIVATE_SETTINGS.add(FP_WAKE_UNLOCK);
         }
 
         /**
