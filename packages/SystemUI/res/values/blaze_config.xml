@@ -4,11 +4,14 @@
 
     <!-- Udfps vendor code -->
     <integer name="config_udfpsVendorCode">0</integer>
-
+    
     <!-- Udfps display mode provider class name -->
     <string name="config_udfpsDisplayModeProviderComponent">com.android.systemui.biometrics.DummyUdfpsDisplayModeProvider</string>
 
     <!-- Whether to pulse onFingerDown actions instead
         of waking the screen while the screen is off or in lpm. -->
     <bool name="config_pulseOnFingerDown">false</bool>
+
+    <!-- Allow devices override audio panel location to the left side -->
+    <bool name="config_audioPanelOnLeftSide">false</bool>
 </resources>
