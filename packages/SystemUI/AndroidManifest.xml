@@ -477,8 +477,8 @@
         </activity-alias>
 
         <activity android:name=".tuner.StatusbarItemsActivity"
-                  android:theme="@style/ExTunerSettings"
-                  android:label="@string/statusbar_items_title"
+                  android:label="@string/status_bar"
+                  android:theme="@style/Theme.SubSettingsBase"
                   android:process=":tuner"
                   android:parentActivityName="com.blaze.house.categories.StatusBar"
                   android:exported="true">

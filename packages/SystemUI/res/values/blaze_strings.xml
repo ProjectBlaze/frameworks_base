@@ -49,12 +49,10 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
 
-    <!-- Statusbar tuner -->
-    <string name="statusbar_items_title">Statusbar icons</string>
-
     <!-- Name of status bar -->
     <string name="status_bar_vpn">VPN</string>
     <string name="status_bar_call_strength">Call strength</string>
+    <string name="status_bar_data_saver">Data saver</string>
 
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Dash charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
@@ -119,7 +117,7 @@
     <string name="screenrecord_delete_label">Delete</string>
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Screen recording deleted</string>
-    
+
     <!-- Name of the clock in status bar [CHAR LIMIT=30] -->
     <string name="clock">Clock</string>
     
