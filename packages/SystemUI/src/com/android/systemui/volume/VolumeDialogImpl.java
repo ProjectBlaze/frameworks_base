@@ -23,6 +23,7 @@ import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_ACCESSIBILITY;
 import static android.media.AudioManager.STREAM_ALARM;
 import static android.media.AudioManager.STREAM_MUSIC;
+import static android.media.AudioManager.STREAM_NOTIFICATION;
 import static android.media.AudioManager.STREAM_RING;
 import static android.media.AudioManager.STREAM_VOICE_CALL;
 import static android.provider.Settings.System.VOLUME_PANEL_ON_LEFT;
@@ -1641,6 +1642,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean isExpandableRow(VolumeRow row) {
         return row != null && row != mDefaultRow && !row.defaultStream
                 && (row.stream == STREAM_RING
+                        || (row.stream == STREAM_NOTIFICATION && !mState.linkedNotification)
                         || row.stream == STREAM_ALARM
                         || row.stream == STREAM_MUSIC);
     }
