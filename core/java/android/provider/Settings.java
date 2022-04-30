@@ -5861,6 +5861,11 @@ public final class Settings {
                 "button_backlight_only_when_pressed";
 
         /**
+         * @hide
+         */
+        public static final String QS_TRANSPARENCY = "qs_transparency";
+
+        /**
          * These are all public system settings
          *
          * @hide
