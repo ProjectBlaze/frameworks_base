@@ -5720,6 +5720,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String QS_TRANSPARENCY = "qs_transparency";
+
+        /**
+	 * @hide
+         */
         public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
 
         /**
