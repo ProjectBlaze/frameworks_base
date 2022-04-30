@@ -90,5 +90,6 @@ public class SystemSettings {
         Settings.System.KEYGAURD_MEDIA_ART,
         Settings.System.ENABLE_RIPPLE_EFFECT,
         Settings.System.LOCKSCREEN_SMALL_CLOCK,
+	Settings.System.SCREEN_OFF_FOD,
     };
 }

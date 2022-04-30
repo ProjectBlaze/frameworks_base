@@ -29,6 +29,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.RectF;
@@ -41,6 +42,7 @@ import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.hardware.fingerprint.IUdfpsOverlayController;
 import android.hardware.fingerprint.IUdfpsOverlayControllerCallback;
 import android.media.AudioAttributes;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.Process;
@@ -48,6 +50,7 @@ import android.os.RemoteException;
 import android.os.Trace;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.os.UserHandle;
 import android.util.Log;
 import android.view.Gravity;
@@ -80,6 +83,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 import com.android.systemui.util.concurrency.Execution;
+import com.android.systemui.util.settings.SystemSettings;
 import com.android.systemui.util.time.SystemClock;
 
 import java.util.HashSet;
@@ -132,6 +136,7 @@ public class UdfpsController implements DozeReceiver {
     @NonNull private final LockscreenShadeTransitionController mLockscreenShadeTransitionController;
     @Nullable private final UdfpsHbmProvider mHbmProvider;
     @NonNull private final KeyguardBypassController mKeyguardBypassController;
+    @NonNull private final Handler mMainHandler;
     @NonNull private final ConfigurationController mConfigurationController;
     @NonNull private final SystemClock mSystemClock;
     @VisibleForTesting @NonNull final BiometricDisplayListener mOrientationListener;
@@ -170,6 +175,8 @@ public class UdfpsController implements DozeReceiver {
     private boolean mAttemptedToDismissKeyguard;
     private final int mUdfpsVendorCode;
     private Set<Callback> mCallbacks = new HashSet<>();
+    private final SystemSettings mSystemSettings;
+    private boolean mScreenOffFod;
 
     private boolean mDisableNightMode;
     private boolean mNightModeActive;
@@ -341,8 +348,10 @@ public class UdfpsController implements DozeReceiver {
         @Override
         public void onAcquired(int sensorId, int acquiredInfo, int vendorCode) {
             mFgExecutor.execute(() -> {
-                if (acquiredInfo == 6 && (mStatusBarStateController.isDozing() || !mScreenOn)) {
-                    if (vendorCode == mUdfpsVendorCode) {
+                final boolean isDozing = mStatusBarStateController.isDozing() || !mScreenOn;
+                if (acquiredInfo == 6 && vendorCode == mUdfpsVendorCode) {
+                    if ((mScreenOffFod && isDozing) /** Screen off and dozing */ ||
+                            (mKeyguardUpdateMonitor.isDreaming() && mScreenOn) /** AOD or pulse */){
                         if (mContext.getResources().getBoolean(R.bool.config_pulseOnFingerDown)) {
                             mContext.sendBroadcastAsUser(new Intent(PULSE_ACTION),
                                     new UserHandle(UserHandle.USER_CURRENT));
@@ -350,7 +359,7 @@ public class UdfpsController implements DozeReceiver {
                             mPowerManager.wakeUp(mSystemClock.uptimeMillis(),
                                     PowerManager.WAKE_REASON_GESTURE, TAG);
                         }
-                        onAodInterrupt(0, 0, 0, 0); // To-Do pass proper values
+                        onAodInterrupt(0, 0, 0, 0);
                     }
                 }
             });
@@ -595,7 +604,8 @@ public class UdfpsController implements DozeReceiver {
             @NonNull ConfigurationController configurationController,
             @NonNull SystemClock systemClock,
             @NonNull UnlockedScreenOffAnimationController unlockedScreenOffAnimationController,
-            @NonNull SystemUIDialogManager dialogManager) {
+            @NonNull SystemUIDialogManager dialogManager,
+            @NonNull SystemSettings systemSettings) {
         mContext = context;
         mExecution = execution;
         mVibrator = vibrator;
@@ -620,6 +630,7 @@ public class UdfpsController implements DozeReceiver {
         screenLifecycle.addObserver(mScreenObserver);
         mScreenOn = screenLifecycle.getScreenState() == ScreenLifecycle.SCREEN_ON;
         mKeyguardBypassController = keyguardBypassController;
+	mMainHandler = mainHandler;
         mConfigurationController = configurationController;
         mSystemClock = systemClock;
         mUnlockedScreenOffAnimationController = unlockedScreenOffAnimationController;
@@ -656,6 +667,21 @@ public class UdfpsController implements DozeReceiver {
 
         udfpsHapticsSimulator.setUdfpsController(this);
         mUdfpsVendorCode = mContext.getResources().getInteger(R.integer.config_udfpsVendorCode);
+	mSystemSettings = systemSettings;
+        updateScreenOffFodState();
+        mSystemSettings.registerContentObserver(Settings.System.SCREEN_OFF_FOD,
+            new ContentObserver(mMainHandler) {
+                @Override
+                public void onChange(boolean selfChange, Uri uri) {
+                    if (uri.getLastPathSegment().equals(Settings.System.SCREEN_OFF_FOD)) {
+                        updateScreenOffFodState();
+                    }
+                }
+            }
+        );
+    }
+	private void updateScreenOffFodState() {
+        mScreenOffFod = mSystemSettings.getInt(Settings.System.SCREEN_OFF_FOD, 0) == 1;
 	if (BlazeUtils.isPackageInstalled(mContext, "com.blaze.udfps.resources")) {
             mUdfpsAnimation = new UdfpsAnimation(mContext, mWindowManager, mSensorProps);
         }

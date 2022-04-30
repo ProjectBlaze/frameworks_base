@@ -5363,6 +5363,13 @@ public final class Settings {
         @Readable
         public static final String KEYGAURD_MEDIA_ART = "keygaurd_media_art";
 
+	/**
+         * Enable fod detection even when screen is off
+         * Default value is 0
+         * @hide
+         */
+        public static final String SCREEN_OFF_FOD = "screen_off_fod";
+
         /**
          * Double tap on lockscreen to sleep
          * @hide
