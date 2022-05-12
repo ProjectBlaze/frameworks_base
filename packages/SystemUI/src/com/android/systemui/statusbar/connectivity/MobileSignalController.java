@@ -30,8 +30,8 @@ import android.graphics.drawable.Drawable;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.UserHandle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.telephony.AccessNetworkConstants;
@@ -123,17 +123,18 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private int mMobileStatusHistoryIndex;
 
     private boolean mVolteIcon;
-    private boolean mVoWiFiIcon;
 
     private ImsManager mImsManager;
     private FeatureConnector<ImsManager> mFeatureConnector;
     private int mCallState = TelephonyManager.CALL_STATE_IDLE;
     private boolean mShowVolteIcon;
     private boolean mDataDisabledIcon;
-    private boolean mIsVowifiAvailable;
+    private boolean mRoamingIconAllowed;
     // Volte Icon Style
     private int mVoLTEstyle;
 
+    // VoWiFi Icon
+    private int mVoWiFiIcon;
     // VoWiFi Icon Style
     private int mVoWiFistyle;
 
@@ -318,22 +319,22 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), false,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
-                    this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
-                    this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.VOWIFI_ICON_STYLE), false,
-                    this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SHOW_VOWIFI_ICON), false,
+                    Settings.Secure.getUriFor(Settings.Secure.SHOW_COMBINED_STATUS_BAR_SIGNAL_ICONS), false,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON), false,
-	            this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.SHOW_COMBINED_STATUS_BAR_SIGNAL_ICONS), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.VOWIFI_ICON_STYLE), false,
+                    this, UserHandle.USER_ALL);
+     	    resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SHOW_VOWIFI_ICON), false,
                     this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -352,21 +353,21 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     private void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
-        mVolteIcon = Settings.System.getIntForUser(resolver,
-                Settings.System.SHOW_VOLTE_ICON, 1,
-                UserHandle.USER_CURRENT) == 1;
-	mVoLTEstyle = Settings.System.getIntForUser(resolver,
-                Settings.System.VOLTE_ICON_STYLE, 0,
-                UserHandle.USER_CURRENT);
-        mVoWiFiIcon = Settings.System.getIntForUser(resolver,
-                Settings.System.SHOW_VOWIFI_ICON, 1,
-                UserHandle.USER_CURRENT) == 1;
-	mVoWiFistyle = Settings.System.getIntForUser(resolver,
-                Settings.System.VOWIFI_ICON_STYLE, 0,
-                UserHandle.USER_CURRENT);
         mDataDisabledIcon = Settings.System.getIntForUser(resolver,
                 Settings.System.DATA_DISABLED_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
+        mVolteIcon = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_VOLTE_ICON, 1,
+                UserHandle.USER_CURRENT) == 1;
+        mVoLTEstyle = Settings.System.getIntForUser(resolver,
+                Settings.System.VOLTE_ICON_STYLE, 0,
+                UserHandle.USER_CURRENT);
+        mVoWiFistyle = Settings.System.getIntForUser(resolver,
+                Settings.System.VOWIFI_ICON_STYLE, 0,
+                UserHandle.USER_CURRENT);
+	mVoWiFiIcon = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_VOWIFI_ICON, 1,
+                UserHandle.USER_CURRENT);
         mConfig = Config.readConfig(mContext);
         setConfiguration(mConfig);
         notifyListeners();
@@ -504,18 +505,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private int getVolteResId() {
         int resId = 0;
 
-        if (mVoWiFiIcon && isVowifiAvailable()) {
+        if (mVoWiFiIcon == 2 && isVowifiAvailable()) {
             return resId;
         }
-
-        if (mCurrentState.imsRegistered && mVolteIcon) {
-            resId = R.drawable.ic_volte;
-        }
-        return resId;
-    }
-
-    private int getVolteResId() {
-        int resId = 0;
 
         if (mCurrentState.imsRegistered && mVolteIcon) {
             switch(mVoLTEstyle) {
@@ -535,31 +527,27 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 case 4:
                     resId = R.drawable.ic_volte3;
                     break;
-                // CAF HD Icon
-                case 5:
-                    resId = R.drawable.ic_hd2_volte;
-                    break;
                 // MIUI 11 VoLTE icon
-                case 6:
+                case 5:
                     resId = R.drawable.ic_volte_miui;
                     break;
                 // EMUI icon
-                case 7:
+                case 6:
                     resId = R.drawable.ic_volte_emui;
                     break;
                 // Margaritov's VoLTE icon
-                case 8:
+                case 7:
                     resId = R.drawable.ic_volte_margaritov;
                     break;
                 // Margaritov's VoLTE icon2
-                case 9:
+                case 8:
                     resId = R.drawable.ic_volte_margaritov2;
                     break;
                 // Vivo VoLTE icon
-                case 10:
+                case 9:
                     resId = R.drawable.ic_volte_vivo;
                     break;
-                case 0:
+                case 10:
                 default:
                     resId = R.drawable.ic_volte;
                     break;
@@ -702,13 +690,13 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             boolean showDataIconStatusBar = (mCurrentState.dataConnected || dataDisabled)
                     && (mCurrentState.dataSim && mCurrentState.isDefault);
             typeIcon =
-                    ((showDataIconStatusBar || mConfig.alwaysShowDataRatIcon) && getVolteResId() == 0) ? dataTypeIcon : 0;
+                    (showDataIconStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
             showDataIconStatusBar |= mCurrentState.roaming;
             statusIcon = new IconState(
                     showDataIconStatusBar && !mCurrentState.airplaneMode,
                     getCurrentIconId(), contentDescription);
             MobileIconGroup vowifiIconGroup = getVowifiIconGroup();
-            if (vowifiIconGroup != null && mVoWiFiIcon) {
+            if (vowifiIconGroup != null && (mVoWiFiIcon >= 1)) {
                 typeIcon = vowifiIconGroup.dataType;
                 statusIcon = new IconState(true,
                         mCurrentState.enabled && !mCurrentState.airplaneMode? statusIcon.icon : -1,
@@ -723,15 +711,14 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             boolean showDataIconInStatusBar =
                     (mCurrentState.dataConnected && mCurrentState.isDefault) || dataDisabled;
             typeIcon =
-                    ((showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) && getVolteResId() == 0) ? dataTypeIcon : 0;
+                    (showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
             MobileIconGroup vowifiIconGroup = getVowifiIconGroup();
-            if (vowifiIconGroup != null && mVoWiFiIcon) {
+            if (vowifiIconGroup != null && (mVoWiFiIcon >= 1)) {
                 typeIcon = vowifiIconGroup.dataType;
                 statusIcon = new IconState(true,
                         mCurrentState.enabled && !mCurrentState.airplaneMode? statusIcon.icon : -1,
                         statusIcon.contentDescription);
             }
-
             showTriangle = mCurrentState.enabled && !mCurrentState.airplaneMode;
         }
 
@@ -1029,7 +1016,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         }
         mCurrentState.dataConnected = mCurrentState.isDataConnected();
 
-        mCurrentState.roaming = isRoaming();
+        mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isDataDisabled() && mDataDisabledIcon/*!mConfig.alwaysShowDataRatIcon*/) {
@@ -1139,7 +1126,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 // Simple3
                 case 7:
                     return TelephonyIcons.VOWIFI_Simple3;
-		 // Vivo
+                // Vivo
                 case 8:
                     return TelephonyIcons.VOWIFI_VIVO;
                 // Margaritov
