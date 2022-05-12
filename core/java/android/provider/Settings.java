@@ -5485,6 +5485,13 @@ public final class Settings {
          */
         public static final String SHOW_VOWIFI_ICON = "show_vowifi_icon";
 
+	/**
+         * Whether to wake the display when plugging or unplugging the charger
+         *
+         * @hide
+         */
+        public static final String WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
+
         /**
          * Use doubletap as doze pulse triggers
          * @hide
