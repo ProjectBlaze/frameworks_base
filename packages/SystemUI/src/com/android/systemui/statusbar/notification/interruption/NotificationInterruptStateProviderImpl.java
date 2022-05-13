@@ -276,7 +276,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         return true;
     }
 
-    private void setUseLessBoringHeadsUp(boolean lessBoring) {
+    public void setUseLessBoringHeadsUp(boolean lessBoring) {
         mLessBoringHeadsUp = lessBoring;
     }
 
@@ -406,6 +406,12 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                 }
                 return false;
             }
+        }
+        if (shouldSkipHeadsUp(sbn)) {
+            if (DEBUG_HEADS_UP) {
+                Log.d(TAG, "No alerting: less boring headsup enabled");
+            }
+            return false;
         }
         return true;
     }
