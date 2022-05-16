@@ -76,7 +76,7 @@ public enum ScrimState {
             }
             mFrontTint = Color.BLACK;
             mBehindTint = Color.TRANSPARENT;
-            mNotifTint = Color.TRANSPARENT;
+            mNotifTint = mClipQsScrim ? Color.BLACK : Color.TRANSPARENT;
             mFrontAlpha = 0;
             mBehindAlpha = mClipQsScrim ? mQSClipScrimAlpha : mScrimBehindAlphaKeyguard;
             mNotifAlpha = mClipQsScrim ? mScrimBehindAlphaKeyguard : 0;
@@ -120,7 +120,7 @@ public enum ScrimState {
             mBehindAlpha = mClipQsScrim ? mQSClipScrimAlpha : mDefaultScrimAlpha;
             mBehindTint = Color.TRANSPARENT;
             mNotifAlpha = mClipQsScrim ? mQSClipScrimAlpha : 0;
-            mNotifTint = mClipQsScrim ? Color.BLACK : Color.TRANSPARENT;
+            mNotifTint = Color.TRANSPARENT;
             mFrontAlpha = 0f;
         }
     },

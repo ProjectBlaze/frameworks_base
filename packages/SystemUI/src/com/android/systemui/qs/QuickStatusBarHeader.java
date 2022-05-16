@@ -94,6 +94,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private View mContainer;
     private NetworkTraffic mNetworkTraffic;
 
+    private View mQSCarriers;
     private ViewGroup mClockContainer;
     private Clock mClockView;
     private Space mDatePrivacySeparator;
@@ -125,6 +126,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
     private boolean mHasLeftCutout;
     private boolean mHasRightCutout;
+    @NonNull
+    private List<String> mRssiIgnoredSlots;
+    private boolean mIsSingleCarrier;
     private boolean mHasCenterCutout;
     private boolean mConfigShowBatteryEstimate;
 
@@ -156,6 +160,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mHeaderQsPanel = findViewById(R.id.quick_qs_panel);
         mDatePrivacyView = findViewById(R.id.quick_status_bar_date_privacy);
         mStatusIconsView = findViewById(R.id.quick_qs_status_icons);
+	mQSCarriers = findViewById(R.id.carrier_group);
         mContainer = findViewById(R.id.qs_container);
         mIconContainer = findViewById(R.id.statusIcons);
         mPrivacyChip = findViewById(R.id.privacy_chip);
@@ -207,6 +212,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             StatusBarContentInsetsProvider insetsProvider) {
         mUseCombinedQSHeader = useCombinedQSHeader;
         mTintedIconManager = iconManager;
+	mRssiIgnoredSlots = rssiIgnoredSlots;
         mInsetsProvider = insetsProvider;
         int fillColor = Utils.getColorAttrDefaultColor(getContext(),
                 android.R.attr.textColorPrimary);
@@ -216,6 +222,11 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
         mQSExpansionPathInterpolator = qsExpansionPathInterpolator;
         updateAnimators();
+    }
+
+    void setIsSingleCarrier(boolean isSingleCarrier) {
+        mIsSingleCarrier = isSingleCarrier;
+        updateAlphaAnimator();
     }
 
     public QuickQSPanel getHeaderQsPanel() {
@@ -415,7 +426,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 // These views appear on expanding down
                 .addFloat(mDateView, "alpha", 0, 0, 1)
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
-                .addFloat(mNetworkTraffic, "alpha", 0, 1)
+                .addFloat(mQSCarriers, "alpha", 0, 1)
+		.addFloat(mNetworkTraffic, "alpha", 0, 1)
                 // Use statusbar paddings when collapsed,
                 // align with QS when expanded, and animate translation
                 .addFloat(mClockContainer, "translationX",
@@ -426,6 +438,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                     @Override
                     public void onAnimationAtEnd() {
                         super.onAnimationAtEnd();
+			 if (!mIsSingleCarrier) {
+                            mIconContainer.addIgnoredSlots(mRssiIgnoredSlots);
+                        }
+                        // Make it gone so there's enough room for carrier names
                         mClockDateView.setVisibility(View.GONE);
                     }
 
@@ -436,7 +452,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                             mClockDateView.setFreezeSwitching(true);
                         }
                         setSeparatorVisibility(false);
-                    }
+                   	if (!mIsSingleCarrier) {
+                            mIconContainer.addIgnoredSlots(mRssiIgnoredSlots);
+                        }
+		    }
 
                     @Override
                     public void onAnimationAtStart() {
@@ -446,6 +465,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                             mClockDateView.setVisibility(View.VISIBLE);
                         }
                         setSeparatorVisibility(mShowClockIconsSeparator);
+			// In QQS we never ignore RSSI.
+                        mIconContainer.removeIgnoredSlots(mRssiIgnoredSlots);
                     }
                 });
         mAlphaAnimator = builder.build();
@@ -577,6 +598,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         if (mClockIconsSeparator.getVisibility() == newVisibility) return;
 
         mClockIconsSeparator.setVisibility(visible ? View.VISIBLE : View.GONE);
+	mQSCarriers.setVisibility(visible ? View.GONE : View.VISIBLE);
 
         LinearLayout.LayoutParams lp =
                 (LinearLayout.LayoutParams) mClockContainer.getLayoutParams();
