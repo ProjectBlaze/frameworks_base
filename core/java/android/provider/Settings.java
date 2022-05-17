@@ -10139,6 +10139,11 @@ public final class Settings {
         public static final String SYSTEM_NAVIGATION_KEYS_ENABLED =
                 "system_navigation_keys_enabled";
 
+ 	/**
+         * @hide
+         */
+        public static final String USE_TILES_ON_SECURE_KEYGUARD = "use_tiles_on_secure_keyguard";
+
         /**
          * Holds comma separated list of ordering of QS tiles.
          *
