@@ -93,4 +93,7 @@
 
     <!-- Floating rotation button margin when on 2-button navbar mode -->
     <dimen name="floating_rotation_button_min_margin_navbar">60dp</dimen>
+
+    <!-- OmniWeather image size -->
+    <dimen name="current_weather_image_size">42dp</dimen>
 </resources>

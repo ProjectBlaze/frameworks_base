@@ -94,5 +94,6 @@ public class SystemSettings {
         Settings.System.VOLUME_PANEL_ON_LEFT,
         Settings.System.BATTERY_LEVEL_COLORS,
         Settings.System.QS_SHOW_BATTERY_ESTIMATE,
+	Settings.System.OMNIJAWS_WEATHER_ICON_PACK,
     };
 }

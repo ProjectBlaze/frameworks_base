@@ -5616,6 +5616,11 @@ public final class Settings {
          */
         public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
 
+	/**
+          * @hide
+          */
+         public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
+
         /**
          * Whether to display 4G icon instead LTE
          * @hide
@@ -6026,6 +6031,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CAMERA_WAKE_SCREEN);
             PRIVATE_SETTINGS.add(CAMERA_SLEEP_ON_RELEASE);
             PRIVATE_SETTINGS.add(CAMERA_LAUNCH);
+	    PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
         }
 
         /**
