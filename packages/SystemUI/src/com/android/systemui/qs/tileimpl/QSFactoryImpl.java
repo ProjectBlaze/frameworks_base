@@ -39,7 +39,6 @@ import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DeviceControlsTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
-import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.InternetTile;
@@ -109,7 +108,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
-    private final Provider<GamingModeTile> mGamingModeTileProvider;
     private final Provider<RebootTile> mRebootTileProvider;
     private final Provider<RefreshRateTile> mRefreshRateTileProvider;
 
@@ -155,7 +153,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SoundTile> soundTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
-            Provider<GamingModeTile> gamingModeTileProvider,
             Provider<RebootTile> rebootTileProvider,
             Provider<RefreshRateTile> refreshRateTileProvider) {
         mQsHostLazy = qsHostLazy;
@@ -196,7 +193,6 @@ public class QSFactoryImpl implements QSFactory {
         mSoundTileProvider = soundTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
         mHeadsUpTileProvider = headsUpTileProvider;
-        mGamingModeTileProvider = gamingModeTileProvider;
         mRebootTileProvider = rebootTileProvider;
         mRefreshRateTileProvider = refreshRateTileProvider;
     }
@@ -282,8 +278,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mScreenshotTileProvider.get();
             case "heads_up":
                 return mHeadsUpTileProvider.get();
-            case "gamingmode":
-                return mGamingModeTileProvider.get();
             case "reboot":
                 return mRebootTileProvider.get();
             case "refresh_rate":
