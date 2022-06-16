@@ -24,6 +24,7 @@ import com.android.systemui.qs.tiles.CellularTile
 import com.android.systemui.qs.tiles.PowerShareTile
 import com.android.systemui.qs.tiles.HeadsUpTile
 import com.android.systemui.qs.tiles.SyncTile
+import com.android.systemui.qs.tiles.VPNTetheringTile
 import com.android.systemui.qs.tiles.WifiTile
 import dagger.Binds
 import dagger.Module
@@ -74,7 +75,13 @@ interface QSModuleblaze {
     @IntoMap
     @StringKey(SyncTile.TILE_SPEC)
     fun bindSyncTile(syncTile: SyncTile): QSTileImpl<*>
-    
+
+    /** Inject VPNTetheringTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(VPNTetheringTile.TILE_SPEC)
+    fun bindVPNTetheringTile(vpnTetheringTile: VPNTetheringTile): QSTileImpl<*>
+
     /** Inject WifiTile into tileMap in QSModule */
     @Binds
     @IntoMap
