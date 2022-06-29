@@ -5542,6 +5542,18 @@ public final class Settings {
          */
         public static final String ENABLE_RIPPLE_EFFECT = "enable_ripple_effect";
 
+	/**
+         * reTicker Status
+         * @hide
+         */
+        public static final String RETICKER_STATUS = "reticker_status";
+
+        /**
+         * reTicker Colored
+         * @hide
+         */
+        public static final String RETICKER_COLORED = "reticker_colored";
+
         /**
          * Whether StatusBar icons should use app icon
          * @hide
