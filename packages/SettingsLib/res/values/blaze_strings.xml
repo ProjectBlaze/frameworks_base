@@ -21,4 +21,12 @@
     <string name="screen_zoom_summary_smaller">Smaller</string>
     <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
     <string name="screen_zoom_summary_smallest">Smallest</string>
+    <!-- Label for estimated remaining duration of TurboPower battery charging -->
+    <string name="power_remaining_turbo_charging_duration_only">Turbo charging (<xliff:g id="time">%1$s</xliff:g> left until full)</string>
+    <!-- Label for estimated remaining duration of dash battery charging -->
+    <string name="power_remaining_dash_charging_duration_only">Dash charging (<xliff:g id="time">%1$s</xliff:g> left until full)</string>
+    <!-- Label for estimated remaining duration of warp battery charging -->
+    <string name="power_remaining_warp_charging_duration_only">Warp charging (<xliff:g id="time">%1$s</xliff:g> left until full)</string>
+    <!-- Label for estimated remaining duration of vooc battery charging -->
+    <string name="power_remaining_vooc_charging_duration_only">VOOC charging (<xliff:g id="time">%1$s</xliff:g> left until full)</string>
 </resources>
