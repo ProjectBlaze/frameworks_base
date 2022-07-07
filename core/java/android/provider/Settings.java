@@ -5274,6 +5274,20 @@ public final class Settings {
          */
         public static final String HEADS_UP_TIMEOUT = "heads_up_time_out";
 
+        /**
+         * Applications list where heasdup should't show
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
+
+        /**
+         * Which applications to disable heads up notifications for
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+
          /**
          * Whether or not to vibrate when a touchscreen gesture is detected
          * @hide
