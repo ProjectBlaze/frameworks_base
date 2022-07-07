@@ -5261,7 +5261,13 @@ public final class Settings {
          * @hide
          */
         public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
-        
+
+        /**
+         * Defines the global heads up notification snooze
+         * @hide
+         */
+        public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
+
          /**
          * Whether or not to vibrate when a touchscreen gesture is detected
          * @hide
