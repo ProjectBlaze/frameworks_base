@@ -5268,6 +5268,12 @@ public final class Settings {
          */
         public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
 
+        /**
+         * Heads up timeout configuration
+         * @hide
+         */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_time_out";
+
          /**
          * Whether or not to vibrate when a touchscreen gesture is detected
          * @hide
