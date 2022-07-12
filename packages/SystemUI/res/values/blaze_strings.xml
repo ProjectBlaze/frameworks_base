@@ -52,8 +52,9 @@
     <!-- Statusbar tuner -->
     <string name="statusbar_items_title">Statusbar icons</string>
 
-    <!-- Name of the VPN status bar icon. -->
+    <!-- Name of status bar -->
     <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_call_strength">Call strength</string>
 
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Dash charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> until full)</string>
