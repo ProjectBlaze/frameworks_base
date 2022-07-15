@@ -1866,6 +1866,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
             AudioSystem.setParameters("BT_SCO=off");
         } else {
             AudioSystem.setParameters("BT_SCO=on");
+            mAudioService.postSetBluetoothScoVolume();
         }
         if (preferredCommunicationDevice == null) {
             AudioDeviceAttributes defaultDevice = getDefaultCommunicationDevice();
