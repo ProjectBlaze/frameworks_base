@@ -110,4 +110,34 @@
 
     <!-- Whether device has VOOC charging support -->
     <java-symbol type="bool" name="config_hasVoocCharger" />
+
+    <!-- Button and keyboard backlight -->
+    <java-symbol type="integer" name="config_deviceSupportsButtonBrightnessControl" />
+    <java-symbol type="integer" name="config_deviceSupportsKeyboardBrightnessControl" />
+    <java-symbol type="dimen" name="config_buttonBrightnessSettingDefaultFloat" />
+    <java-symbol type="dimen" name="config_keyboardBrightnessSettingDefaultFloat" />
+
+    <!-- Whether device can force navbar disabling -->
+    <java-symbol type="bool" name="config_canForceDisableNavigationBar" />
+
+    <!-- Whether device supports gestures on fingerprint sensor -->
+    <java-symbol type="bool" name="config_supportsGesturesOnFingerprintSensor" />
+
+    <!-- Device hardware keys -->
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
+    <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
+
+    <!-- Device keys user-customisable behavior -->
+    <java-symbol type="integer" name="config_longPressOnBackBehavior" />
+    <java-symbol type="integer" name="config_longPressOnHomeBehavior" />
+    <java-symbol type="integer" name="config_doubleTapOnHomeBehavior" />
+    <java-symbol type="integer" name="config_longPressOnMenuBehavior" />
+    <java-symbol type="integer" name="config_longPressOnAppSwitchBehavior" />
+    <java-symbol type="integer" name="config_pressOnAppSwitchBehavior" />
+    <java-symbol type="integer" name="config_pressOnAssistBehavior" />
+    <java-symbol type="integer" name="config_longPressOnAssistBehavior" />
+
+    <!-- Camera key type -->
+    <java-symbol type="bool" name="config_singleStageCameraKey" />
+
 </resources>
