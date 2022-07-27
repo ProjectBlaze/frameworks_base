@@ -117,7 +117,7 @@ public class BlazeKeyguardSliceProvider extends KeyguardSliceProvider implements
         }
     }
 
-    private void addWeather(ListBuilder listBuilder) {
+    public void addWeather(ListBuilder listBuilder) {
         SmartSpaceCard weatherCard = this.mSmartSpaceData.getWeatherCard();
         if (weatherCard != null && !weatherCard.isExpired()) {
             ListBuilder.RowBuilder title = new ListBuilder.RowBuilder(this.mWeatherUri).setTitle(weatherCard.getTitle());
