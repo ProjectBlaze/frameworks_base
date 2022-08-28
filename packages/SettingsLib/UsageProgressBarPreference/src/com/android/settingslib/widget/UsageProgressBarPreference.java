@@ -148,7 +148,7 @@ public class UsageProgressBarPreference extends Preference {
         holder.setDividerAllowedBelow(false);
 
         final TextView usageSummary = (TextView) holder.findViewById(R.id.usage_summary);
-        usageSummary.setText(enlargeFontOfNumber(mUsageSummary));
+        usageSummary.setText(mUsageSummary);
 
         final TextView totalSummary = (TextView) holder.findViewById(R.id.total_summary);
         if (mTotalSummary != null) {
@@ -176,22 +176,8 @@ public class UsageProgressBarPreference extends Preference {
             animator.start();
         }
 
-        if (mPercent >= 90) {
-            progressBar.setProgressTintList(context.getColorStateList(R.color.battery_full));
-            progressBar.setProgressBackgroundTintList(context.getColorStateList(R.color.battery_full));
-        } else if (mPercent >= 75) {
-            progressBar.setProgressTintList(context.getColorStateList(R.color.battery_70));
-            progressBar.setProgressBackgroundTintList(context.getColorStateList(R.color.battery_70));
-        } else if (mPercent >= 50) {
-            progressBar.setProgressTintList(context.getColorStateList(R.color.battery_50));
-            progressBar.setProgressBackgroundTintList(context.getColorStateList(R.color.battery_50));
-        } else if (mPercent >= 35) {
-            progressBar.setProgressTintList(context.getColorStateList(R.color.battery_35));
-            progressBar.setProgressBackgroundTintList(context.getColorStateList(R.color.battery_35));
-        } else if (mPercent >= 25 || mPercent >= 0) {
-            progressBar.setProgressTintList(context.getColorStateList(R.color.battery_low));
-            progressBar.setProgressBackgroundTintList(context.getColorStateList(R.color.battery_low));
-        }
+       progressBar.setProgressTintList(context.getColorStateList(R.color.oos_battery_color));
+       progressBar.setProgressBackgroundTintList(context.getColorStateList(R.color.oos_battery_color));
     }
 
     private CharSequence enlargeFontOfNumber(CharSequence summary) {
