@@ -34,6 +34,7 @@ import android.os.UserHandle
 import android.service.quicksettings.Tile
 import android.text.TextUtils
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +49,6 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import android.annotation.SuppressLint;
 import com.android.settingslib.Utils
-import com.android.systemui.FontSizeUtils
 import com.android.systemui.R
 import com.android.systemui.animation.Interpolators
 import com.android.systemui.animation.LaunchableView
@@ -214,6 +214,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private var vertical = false
     private val forceHideCheveron = true
     private var labelHide = false
+    private var labelSize = 14f
 
     init {
         setId(generateViewId())
@@ -227,6 +228,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
         }
 
         labelHide = QSLayoutUtils.getQSTileLabelHide(context)
+        labelSize = QSLayoutUtils.getQSTileLabelSize(context)
 
         if (labelHide)
             gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
@@ -290,8 +292,8 @@ open class QSTileViewImpl @JvmOverloads constructor(
     }
 
     fun updateResources() {
-        FontSizeUtils.updateFontSize(label, R.dimen.qs_tile_text_size)
-        FontSizeUtils.updateFontSize(secondaryLabel, R.dimen.qs_tile_text_size)
+        label.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
+        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
 
 	if (isA11Style) {
 	    updateA11StyleResources()

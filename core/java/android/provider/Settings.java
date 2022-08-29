@@ -5936,6 +5936,11 @@ public final class Settings {
         public static final String QS_TILE_ANIMATION_INTERPOLATOR = "qs_tile_animation_interpolator";
 
         /**
+         * @hide
+         */
+        public static final String QS_TILE_LABEL_SIZE = "qs_tile_label_size";
+
+        /**
          * These are all public system settings
          *
          * @hide
