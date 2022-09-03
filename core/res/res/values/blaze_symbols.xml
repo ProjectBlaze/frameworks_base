@@ -35,4 +35,7 @@
     <!-- Light / Regular style fonts -->
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
+
+    <!-- Cycle through ringer modes -->
+    <java-symbol type="string" name="volume_dialog_ringer_guidance_normal" />
 </resources>
