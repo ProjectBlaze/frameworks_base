@@ -5812,6 +5812,14 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_SECONDS = "status_bar_clock_seconds";
+        
+        /**
+         * Statusbar clock background
+         * 0 - hide accented chip 
+         * 1 - show accented chip (default)
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_CHIP = "statusbar_clock_chip";
 
         /**
          * Shows custom date before clock time
@@ -6113,6 +6121,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_IGNORE_DND);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_RATE);
             PRIVATE_SETTINGS.add(FP_WAKE_UNLOCK);
+            PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_CHIP);
         }
 
         /**
