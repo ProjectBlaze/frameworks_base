@@ -80,6 +80,7 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
     public PagedTileLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mScroller = new Scroller(context, SCROLL_CUBIC);
+        mScroller.setFriction(0.006f);
         setAdapter(mAdapter);
         setOnPageChangeListener(mOnPageChangeListener);
         setCurrentItem(0, false);

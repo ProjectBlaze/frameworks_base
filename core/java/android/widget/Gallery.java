@@ -1479,6 +1479,7 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
 
         public FlingRunnable() {
             mScroller = new Scroller(getContext());
+            mScroller.setFriction(0.006f);
         }
 
         private void startCommon() {

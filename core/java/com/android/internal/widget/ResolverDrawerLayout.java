@@ -162,6 +162,7 @@ public class ResolverDrawerLayout extends ViewGroup {
 
         mScroller = new OverScroller(context, AnimationUtils.loadInterpolator(context,
                 android.R.interpolator.decelerate_quint));
+        mScroller.setFriction(0.0015f);
         mVelocityTracker = VelocityTracker.obtain();
 
         final ViewConfiguration vc = ViewConfiguration.get(context);
