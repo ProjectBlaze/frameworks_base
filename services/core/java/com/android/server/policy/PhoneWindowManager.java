@@ -1567,6 +1567,26 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDefaultDisplayPolicy.takeScreenshot(type, source);
     }
 
+    private class ScreenshotRunnable implements Runnable {
+        private int mScreenshotType = TAKE_SCREENSHOT_FULLSCREEN;
+        private int mScreenshotSource = SCREENSHOT_KEY_OTHER;
+
+        public void setScreenshotType(int screenshotType) {
+            mScreenshotType = screenshotType;
+        }
+
+        public void setScreenshotSource(int screenshotSource) {
+            mScreenshotSource = screenshotSource;
+        }
+
+        @Override
+        public void run() {
+            mDefaultDisplayPolicy.takeScreenshot(mScreenshotType, mScreenshotSource);
+        }
+    }
+
+    private final ScreenshotRunnable mScreenshotRunnable = new ScreenshotRunnable();
+
     @Override
     public void showGlobalActions() {
         mHandler.removeMessages(MSG_DISPATCH_SHOW_GLOBAL_ACTIONS);
