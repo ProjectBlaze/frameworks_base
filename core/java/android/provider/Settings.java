@@ -5720,12 +5720,27 @@ public final class Settings {
          */
         @Readable
         public static final String TOAST_ICON = "toast_icon";
-        
+
         /**
          * Volume panel on left
          * @hide
          */
         public static final String VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
+
+	/**
+         * @hide
+         */
+        public static final String UDFPS_ANIM = "udfps_anim";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM_STYLE = "udfps_anim_style";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ICON = "udfps_icon";
 
         /**
          * Wheter to show network traffic indicator in statusbar
