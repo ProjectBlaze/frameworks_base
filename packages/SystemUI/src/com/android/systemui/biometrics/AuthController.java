@@ -491,9 +491,9 @@ public class AuthController extends CoreStartable implements CommandQueue.Callba
         mContext.getDisplay().getDisplayInfo(displayInfo);
         final Display.Mode maxDisplayMode =
                 DisplayUtils.getMaximumResolutionDisplayMode(displayInfo.supportedModes);
-        final float scaleFactor = android.util.DisplayUtils.getPhysicalPixelDisplaySizeRatio(
-                mStableDisplaySize.x, mStableDisplaySize.y, displayInfo.getNaturalWidth(),
-                displayInfo.getNaturalHeight());
+        final float scaleFactor = DisplayUtils.getPhysicalPixelDisplaySizeRatio(
+                maxDisplayMode.getPhysicalWidth(), maxDisplayMode.getPhysicalHeight(),
+                displayInfo.getNaturalWidth(), displayInfo.getNaturalHeight());
         if (scaleFactor == Float.POSITIVE_INFINITY) {
             return new PointF(mFaceAuthSensorLocation.x, mFaceAuthSensorLocation.y);
         }
@@ -1066,7 +1066,6 @@ public class AuthController extends CoreStartable implements CommandQueue.Callba
     @Override
     public void dump(@NonNull PrintWriter pw, @NonNull String[] args) {
         final AuthDialog dialog = mCurrentDialog;
-        pw.println("  stableDisplaySize=" + mStableDisplaySize);
         pw.println("  faceAuthSensorLocation=" + mFaceAuthSensorLocation);
         pw.println("  fingerprintLocation=" + mFingerprintLocation);
         pw.println("  udfpsBounds=" + mUdfpsBounds);
