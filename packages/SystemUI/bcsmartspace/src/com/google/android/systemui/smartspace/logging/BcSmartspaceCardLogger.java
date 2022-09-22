@@ -24,9 +24,7 @@ public class BcSmartspaceCardLogger {
                 -1,
                 0,
                 0,
-                bcSmartspaceCardLoggingInfo.getReceivedLatency(),
-                BcSmartspaceCardLoggerUtil.convertSubcardInfoToBytes(
-                        bcSmartspaceCardLoggingInfo.getSubcardInfo()));
+                bcSmartspaceCardLoggingInfo.getReceivedLatency());
         if (IS_VERBOSE) {
             Log.d(
                     "StatsLog",

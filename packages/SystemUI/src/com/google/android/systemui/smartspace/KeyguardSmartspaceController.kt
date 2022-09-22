@@ -2,7 +2,6 @@ package com.google.android.systemui.smartspace
 
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.flags.FeatureFlags
-import com.android.systemui.flags.Flags
 
 import com.google.android.systemui.smartspace.KeyguardMediaViewController
 import com.google.android.systemui.smartspace.KeyguardZenAlarmViewController
@@ -16,7 +15,7 @@ class KeyguardSmartspaceController @Inject constructor(
     private val mediaController: KeyguardMediaViewController,
 ) {
     init {
-        if (featureFlags.isEnabled(Flags.SMARTSPACE)) {
+        if (featureFlags.isSmartspaceEnabled()) {
             mediaController.init()
             zenController.init()
         }
