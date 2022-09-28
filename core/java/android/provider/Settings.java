@@ -11479,6 +11479,12 @@ public final class Settings {
          */
         public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
 
+	/**
+         * Quicksettings tile shape
+         * @hide
+         */
+        public static final String QS_TILE_SHAPE = "qs_tile_shape";
+
         /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
