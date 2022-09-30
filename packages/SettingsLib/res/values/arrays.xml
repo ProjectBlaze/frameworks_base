@@ -653,5 +653,17 @@
 
     <!-- Content descriptions for each of the images in the avatar_images array. -->
     <string-array name="avatar_image_descriptions"/>
+    
+    <!-- Titles for debug renderer preference. [CHAR LIMIT=50] -->
+    <string-array name="debug_hw_renderer_entries">
+        <item>OpenGL (Default)</item>
+        <item>OpenGL (Skia)</item>
+    </string-array>
+
+    <!-- Values for debug renderer preference. -->
+    <string-array name="debug_hw_renderer_values" translatable="false" >
+        <item>opengl</item>
+        <item>skiagl</item>
+    </string-array>
 
 </resources>

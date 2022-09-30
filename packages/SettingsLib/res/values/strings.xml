@@ -1604,4 +1604,7 @@
     <string name="back_navigation_animation_summary">Enable system animations for predictive back.</string>
     <!-- Developer setting: enable animations when a back gesture is executed, full explanation[CHAR LIMIT=NONE] -->
     <string name="back_navigation_animation_dialog">This setting enables system animations for predictive gesture animation. It requires setting per-app "enableOnBackInvokedCallback" to true in the manifest file.</string>
+    
+    <!-- UI debug setting: select the renderer to use by RenderThread [CHAR LIMIT=25] -->
+    <string name="debug_hw_renderer">Set GPU Renderer</string>
 </resources>
