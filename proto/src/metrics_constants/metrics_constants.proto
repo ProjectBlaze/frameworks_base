@@ -7440,5 +7440,10 @@ message MetricsEvent {
 
     // BlazeHouse constant
     BLAZE_HOUSE = 1999;
+
+    // OPEN: Settings > Display > Full screen apps
+    // OS: T
+    DISPLAY_CUTOUT_FORCE_FULLSCREEN = 2000;
+
   }
 }
