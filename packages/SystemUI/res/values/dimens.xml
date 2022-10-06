@@ -471,10 +471,11 @@
     <dimen name="qs_tile_margin_horizontal">22dp</dimen>
     <dimen name="qs_tile_margin_vertical">@dimen/qs_tile_margin_horizontal</dimen>
     <dimen name="qs_tile_margin_top_bottom">4dp</dimen>
+    <dimen name="quick_qs_brightness_margin_top">24dp</dimen>
     <dimen name="qs_brightness_margin_top">8dp</dimen>
     <dimen name="qs_brightness_margin_bottom">24dp</dimen>
     <dimen name="qqs_layout_margin_top">16dp</dimen>
-    <dimen name="qqs_layout_padding_bottom">24dp</dimen>
+    <dimen name="qqs_layout_padding_bottom">26dp</dimen>
 
     <!-- Most of the time it should be the same as notification_side_paddings as it's vertically
          aligned with notifications. The exception is split shade when this value becomes
@@ -510,7 +511,7 @@
     <dimen name="qs_panel_padding">16dp</dimen>
     <dimen name="qs_dual_tile_padding_horizontal">6dp</dimen>
     <dimen name="qs_panel_elevation">4dp</dimen>
-    <dimen name="qs_panel_padding_bottom">@dimen/footer_actions_height</dimen>
+    <dimen name="qs_panel_padding_bottom">0dp</dimen>
     <dimen name="qs_panel_padding_top">48dp</dimen>
 
     <dimen name="qs_data_usage_text_size">14sp</dimen>

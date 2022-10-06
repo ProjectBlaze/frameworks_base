@@ -86,12 +86,12 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
             MarginLayoutParams lp = (MarginLayoutParams) mBrightnessView.getLayoutParams();
             if (top) {
                 lp.topMargin = mContext.getResources()
-                        .getDimensionPixelSize(R.dimen.qqs_top_brightness_margin_top);
+                        .getDimensionPixelSize(R.dimen.qs_brightness_margin_top);
                 lp.bottomMargin = mContext.getResources()
-                        .getDimensionPixelSize(R.dimen.qqs_top_brightness_margin_bottom);
+                        .getDimensionPixelSize(R.dimen.qs_brightness_margin_bottom);
             } else {
                 lp.topMargin = mContext.getResources()
-                        .getDimensionPixelSize(R.dimen.qqs_bottom_brightness_margin_top);
+                        .getDimensionPixelSize(R.dimen.qs_tile_margin_vertical);
                 lp.bottomMargin = 0;
             }
             mBrightnessView.setLayoutParams(lp);
