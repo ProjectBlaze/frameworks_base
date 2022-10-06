@@ -115,4 +115,8 @@
         android:key="clock"
         android:title="@string/clock" />
 
+   <com.android.systemui.tuner.TunerSwitch
+        android:icon="@drawable/ic_statusbar_volte"
+        android:key="ims"
+        android:title="@string/status_bar_ims" />
 </PreferenceScreen>
