@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2016 The CyanogenMod Project
+ *               2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +15,6 @@
  * limitations under the License.
  */
 
-#ifndef _ANDROID_SERVER_POWER_MANAGER_SERVICE_H
-#define _ANDROID_SERVER_POWER_MANAGER_SERVICE_H
+package com.android.internal.custom.hardware;
 
-#include <nativehelper/JNIHelp.h>
-#include "jni.h"
-
-#include <powermanager/PowerManager.h>
-
-namespace android {
-
-extern void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType,
-                                                            int32_t displayId, int32_t keyCode);
-
-} // namespace android
-
-#endif // _ANDROID_SERVER_POWER_MANAGER_SERVICE_H
+parcelable TouchscreenGesture;

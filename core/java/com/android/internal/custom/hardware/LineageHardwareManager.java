@@ -28,6 +28,14 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.custom.app.LineageContextConstants;
 import com.android.internal.custom.hardware.HIDLHelper;
 
+import vendor.lineage.touch.V1_0.IGloveMode;
+import vendor.lineage.touch.V1_0.IHighTouchPollingRate;
+import vendor.lineage.touch.V1_0.IKeyDisabler;
+import vendor.lineage.touch.V1_0.IKeySwapper;
+import vendor.lineage.touch.V1_0.IStylusMode;
+import vendor.lineage.touch.V1_0.ITouchscreenGesture;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.IllegalArgumentException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -50,7 +58,48 @@ public final class LineageHardwareManager {
     // fields, as they might be used via reflection. When the @Keep annotation in
     // the support library is properly handled in the platform, we should change this.
 
+    /**
+     * High Touch Polling Rate
+     */
+    @VisibleForTesting
+    public static final int FEATURE_HIGH_TOUCH_POLLING_RATE = 0x8;
+
+    /**
+     * High touch sensitivity for touch panels
+     */
+    @VisibleForTesting
+    public static final int FEATURE_HIGH_TOUCH_SENSITIVITY = 0x10;
+
+    /**
+     * Hardware navigation key disablement
+     */
+    @VisibleForTesting
+    public static final int FEATURE_KEY_DISABLE = 0x20;
+
+    /**
+     * Hardware navigation key swapping
+     */
+    @VisibleForTesting
+    public static final int FEATURE_KEY_SWAP = 0x40;
+
+    /**
+     * Touchscreen hovering
+     */
+    @VisibleForTesting
+    public static final int FEATURE_TOUCH_HOVERING = 0x800;
+
+    /**
+     * Touchscreen gesture
+     */
+    @VisibleForTesting
+    public static final int FEATURE_TOUCHSCREEN_GESTURES = 0x80000;
+
     private static final List<Integer> BOOLEAN_FEATURES = Arrays.asList(
+        FEATURE_HIGH_TOUCH_POLLING_RATE,
+        FEATURE_HIGH_TOUCH_SENSITIVITY,
+        FEATURE_KEY_DISABLE,
+        FEATURE_KEY_SWAP,
+        FEATURE_TOUCH_HOVERING
     );
 
     private static ILineageHardwareService sService;
@@ -135,9 +184,21 @@ public final class LineageHardwareManager {
 
     private IBase getHIDLService(int feature) {
         try {
-            /*switch (feature) {
-            }*/
-        } catch (NoSuchElementException e) {
+            switch (feature) {
+                case FEATURE_HIGH_TOUCH_POLLING_RATE:
+                    return IHighTouchPollingRate.getService(true);
+                case FEATURE_HIGH_TOUCH_SENSITIVITY:
+                    return IGloveMode.getService(true);
+                case FEATURE_KEY_DISABLE:
+                    return IKeyDisabler.getService(true);
+                case FEATURE_KEY_SWAP:
+                    return IKeySwapper.getService(true);
+                case FEATURE_TOUCH_HOVERING:
+                    return IStylusMode.getService(true);
+                case FEATURE_TOUCHSCREEN_GESTURES:
+                    return ITouchscreenGesture.getService(true);
+            }
+        } catch (NoSuchElementException | RemoteException e) {
         }
         return null;
     }
@@ -179,8 +240,23 @@ public final class LineageHardwareManager {
         try {
             if (isSupportedHIDL(feature)) {
                 IBase obj = mHIDLMap.get(feature);
-                /*switch (feature) {
-                }*/
+                switch (feature) {
+                    case FEATURE_HIGH_TOUCH_POLLING_RATE:
+                        IHighTouchPollingRate highTouchPollingRate = (IHighTouchPollingRate) obj;
+                        return highTouchPollingRate.isEnabled();
+                    case FEATURE_HIGH_TOUCH_SENSITIVITY:
+                        IGloveMode gloveMode = (IGloveMode) obj;
+                        return gloveMode.isEnabled();
+                    case FEATURE_KEY_DISABLE:
+                        IKeyDisabler keyDisabler = (IKeyDisabler) obj;
+                        return keyDisabler.isEnabled();
+                    case FEATURE_KEY_SWAP:
+                        IKeySwapper keySwapper = (IKeySwapper) obj;
+                        return keySwapper.isEnabled();
+                    case FEATURE_TOUCH_HOVERING:
+                        IStylusMode stylusMode = (IStylusMode) obj;
+                        return stylusMode.isEnabled();
+                }
             } else if (checkService()) {
                 return sService.get(feature);
             }
@@ -207,8 +283,23 @@ public final class LineageHardwareManager {
         try {
             if (isSupportedHIDL(feature)) {
                 IBase obj = mHIDLMap.get(feature);
-                /*switch (feature) {
-                }*/
+                switch (feature) {
+                    case FEATURE_HIGH_TOUCH_POLLING_RATE:
+                        IHighTouchPollingRate highTouchPollingRate = (IHighTouchPollingRate) obj;
+                        return highTouchPollingRate.setEnabled(enable);
+                    case FEATURE_HIGH_TOUCH_SENSITIVITY:
+                        IGloveMode gloveMode = (IGloveMode) obj;
+                        return gloveMode.setEnabled(enable);
+                    case FEATURE_KEY_DISABLE:
+                        IKeyDisabler keyDisabler = (IKeyDisabler) obj;
+                        return keyDisabler.setEnabled(enable);
+                    case FEATURE_KEY_SWAP:
+                        IKeySwapper keySwapper = (IKeySwapper) obj;
+                        return keySwapper.setEnabled(enable);
+                    case FEATURE_TOUCH_HOVERING:
+                        IStylusMode stylusMode = (IStylusMode) obj;
+                        return stylusMode.setEnabled(enable);
+                }
             } else if (checkService()) {
                 return sService.set(feature, enable);
             }
@@ -217,6 +308,38 @@ public final class LineageHardwareManager {
         return false;
     }
 
+
+    /**
+     * @return a list of available touchscreen gestures on the devices
+     */
+    public TouchscreenGesture[] getTouchscreenGestures() {
+        try {
+            if (isSupportedHIDL(FEATURE_TOUCHSCREEN_GESTURES)) {
+                ITouchscreenGesture touchscreenGesture = (ITouchscreenGesture)
+                        mHIDLMap.get(FEATURE_TOUCHSCREEN_GESTURES);
+                return HIDLHelper.fromHIDLGestures(touchscreenGesture.getSupportedGestures());
+            }
+        } catch (RemoteException e) {
+        }
+        return null;
+    }
+
+    /**
+     * @return true if setting the activation status was successful
+     */
+    public boolean setTouchscreenGestureEnabled(
+            TouchscreenGesture gesture, boolean state) {
+        try {
+            if (isSupportedHIDL(FEATURE_TOUCHSCREEN_GESTURES)) {
+                ITouchscreenGesture touchscreenGesture = (ITouchscreenGesture)
+                        mHIDLMap.get(FEATURE_TOUCHSCREEN_GESTURES);
+                return touchscreenGesture.setGestureEnabled(
+                        HIDLHelper.toHIDLGesture(gesture), state);
+            }
+        } catch (RemoteException e) {
+        }
+        return false;
+    }
 
     /**
      * @return true if service is valid

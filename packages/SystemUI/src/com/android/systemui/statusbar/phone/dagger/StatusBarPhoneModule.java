@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.phone.dagger;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.statusbar.phone.CentralSurfaces;
 import com.android.systemui.statusbar.phone.CentralSurfacesImpl;
+import com.android.systemui.tuner.TunerService;
 
 import dagger.Binds;
 import dagger.Module;
