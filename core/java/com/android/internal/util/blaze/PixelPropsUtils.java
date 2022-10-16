@@ -29,7 +29,8 @@ import java.util.Map;
 
 public class PixelPropsUtils {
 
-    public static final String PACKAGE_GMS = "com.google.android.gms";
+    private static final String PACKAGE_GMS = "com.google.android.gms";
+    private static final String PACKAGE_FINSKY = "com.android.vending";
     private static final String DEVICE = "org.pixelexperience.device";
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
@@ -39,7 +40,6 @@ public class PixelPropsUtils {
 
     private static final Map<String, Object> propsToChangePixel5;
     private static final String[] packagesToChangePixel5 = {
-            "com.android.vending",
             "com.google.android.apps.photos",
             "com.google.android.apps.recorder",
             "com.google.android.apps.turbo",
@@ -58,7 +58,6 @@ public class PixelPropsUtils {
     private static final Map<String, ArrayList<String>> propsToKeep;
     private static final String[] extraPackagesToChange = {
             "com.android.chrome",
-            "com.android.vending",
             "com.breel.wallpapers20",
             "com.snapchat.android"
     };
@@ -98,6 +97,8 @@ public class PixelPropsUtils {
     };
 
     private static final String[] packagesToKeep = {
+        PACKAGE_FINSKY,
+        PACKAGE_GMS,
         "com.google.android.GoogleCamera",
         "com.google.android.GoogleCamera.Cameight",
         "com.google.android.GoogleCamera.Go",
@@ -130,8 +131,6 @@ public class PixelPropsUtils {
     };
 
     private static ArrayList<String> allProps = new ArrayList<>(Arrays.asList("BRAND", "MANUFACTURER", "DEVICE", "PRODUCT", "MODEL", "FINGERPRINT"));
-
-    private static volatile boolean sIsGms = false;
 
     static {
         propsToKeep = new HashMap<>();
@@ -178,10 +177,6 @@ public class PixelPropsUtils {
         final String processName = app.getProcessName();
         if (packageName == null) {
             return;
-        }
-        if (packageName.equals(PACKAGE_GMS) &&
-                processName.equals(PACKAGE_GMS + ".unstable")) {
-            sIsGms = true;
         }
         boolean isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
         if (!isPixelDevice && 
@@ -261,18 +256,6 @@ public class PixelPropsUtils {
             field.setAccessible(false);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, "Failed to set prop " + key, e);
-        }
-    }
-
-    private static boolean isCallerSafetyNet() {
-        return Arrays.stream(Thread.currentThread().getStackTrace())
-                .anyMatch(elem -> elem.getClassName().contains("DroidGuard"));
-    }
-
-    public static void onEngineGetCertificateChain() {
-        // Check stack for SafetyNet
-        if (sIsGms && isCallerSafetyNet()) {
-            throw new UnsupportedOperationException();
         }
     }
 }
