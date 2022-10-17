@@ -5769,29 +5769,11 @@ public final class Settings {
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
         /**
-         * Whether to display roaming indicator for roaming signal connection
-         * @hide
-         */
-        public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
-
-        /**
-         * Whether to display 4G icon instead LTE
-         * @hide
-         */
-        public static final String SHOW_FOURG_ICON = "show_fourg_icon";
-
-        /**
-         * Whether to display cross sign for a data disabled connection
-         * @hide
-         */
-        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
-        
-        /**
          * media artwork wallpaper blur level on lockscreen
          * @hide
          */
         public static final String LOCKSCREEN_MEDIA_BLUR = "lockscreen_media_blur";
-        
+
         /**
          * reTicker Status
          * @hide
