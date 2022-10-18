@@ -114,4 +114,7 @@
    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
    <java-symbol type="bool" name="config_multiColorBatteryLed" />
    <java-symbol type="bool" name="config_ledCanPulse" />
+
+   <!-- Whether devices suports in-display fingerprint when screen is off -->
+   <java-symbol type="bool" name="config_supportsScreenOffUdfps" />
 </resources>
