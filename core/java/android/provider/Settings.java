@@ -11670,6 +11670,13 @@ public final class Settings {
          */
         public static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
 
+	/**
+         * Whether to spoof device as a high-end model to unlock higher FPS in certain games.
+         * @hide
+         */
+        @Readable
+        public static final String GAMES_DEVICE_SPOOF = "games_device_spoof";
+
         /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
