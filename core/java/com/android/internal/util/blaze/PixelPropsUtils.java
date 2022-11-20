@@ -93,7 +93,11 @@ public class PixelPropsUtils {
             "com.riotgames.league.wildrift",
             "com.riotgames.league.wildrifttw",
             "com.riotgames.league.wildriftvn",
-            "com.netease.lztgglobal",
+            "com.netease.lztgglobal"
+    };
+
+    private static final Map<String, Object> propsToChangeOP9P;
+    private static final String[] packagesToChangeOP9P = {
             "com.epicgames.fortnite",
             "com.epicgames.portal"
     };
@@ -168,6 +172,12 @@ public class PixelPropsUtils {
         propsToChangeOP8P = new HashMap<>();
         propsToChangeOP8P.put("MODEL", "IN2020");
         propsToChangeOP8P.put("MANUFACTURER", "OnePlus");
+        propsToChangeOP9P = new HashMap<>();
+        propsToChangeOP9P.put("BRAND", "OnePlus");
+        propsToChangeOP9P.put("MANUFACTURER", "OnePlus");
+        propsToChangeOP9P.put("DEVICE", "OnePlus9Pro");
+        propsToChangeOP9P.put("PRODUCT", "OnePlus9Pro_EEA");
+        propsToChangeOP9P.put("MODEL", "LE2123");
         propsToChangeMI11 = new HashMap<>();
         propsToChangeMI11.put("BRAND", "Xiaomi");
         propsToChangeMI11.put("MANUFACTURER", "Xiaomi");
@@ -228,6 +238,9 @@ public class PixelPropsUtils {
                 propsToChange.putAll(propsToChangeOP8P);
             }
 
+            if (Arrays.asList(packagesToChangeOP9P).contains(packageName)) {
+                propsToChange.putAll(propsToChangeOP9P);
+            }
             if (Arrays.asList(packagesToChangeMI11).contains(packageName)) {
                 propsToChange.putAll(propsToChangeMI11);
             }
@@ -278,6 +291,13 @@ public class PixelPropsUtils {
             } else if (Arrays.asList(packagesToChangeOP8P).contains(packageName)) {
                 if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
                 for (Map.Entry<String, Object> prop : propsToChangeOP8P.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    setPropValue(key, value);
+                }
+            } else if (Arrays.asList(packagesToChangeOP9P).contains(packageName)) {
+                if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
+                for (Map.Entry<String, Object> prop : propsToChangeOP9P.entrySet()) {
                     String key = prop.getKey();
                     Object value = prop.getValue();
                     setPropValue(key, value);
