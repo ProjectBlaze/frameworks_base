@@ -11183,6 +11183,16 @@ public final class Settings {
         @Readable
         public static final String WINDOW_IGNORE_SECURE = "window_ignore_secure";
 
+	/**
+         * Whether to show the clock in the right or left position or show it in the center
+         * 0: show the clock in the left position (LTR)
+         * 1: show the clock in the center
+         * 2: show the clock in the right position (LTR)
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK = "status_bar_clock";
+
         /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
