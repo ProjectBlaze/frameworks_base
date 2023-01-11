@@ -1053,6 +1053,10 @@ final class DefaultPermissionGrantPolicy {
         // Settings Services
         grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.settings.intelligence", userId,
                 PHONE_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS);
+                
+        // OnePlus Gallery
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.oneplus.gallery", userId,
+                STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
