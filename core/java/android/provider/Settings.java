@@ -5863,7 +5863,12 @@ public final class Settings {
          */
         public static final String SMART_5G = "smart_5g";
 
-       /**
+        /**
+          * Frame rate recorder
+          * @hide
+          */
+        public static final String FRAME_RATE_RECORDER = "frame_rate_recorder";
+
          * These are all public system settings
          *
          * @hide
@@ -5982,6 +5987,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_ENABLED);
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_TIMEOUT);
             PRIVATE_SETTINGS.add(SWIPE_TO_SCREENSHOT);
+            PRIVATE_SETTINGS.add(FRAME_RATE_RECORDER);
         }
 
         /**
