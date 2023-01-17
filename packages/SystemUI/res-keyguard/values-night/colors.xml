@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (C) 2019 The Android Open Source Project
+  Copyright (C) 2023 Corvus-AOSP 
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,11 +15,6 @@
   limitations under the License.
   -->
 <resources>
-  <!-- Default color for hour hand of Bubble clock. -->
-  <color name="bubbleHourHandColor">#C97343</color>
-  <!-- Default color for minute hand of Bubble clock. -->
-  <color name="bubbleMinuteHandColor">#F5C983</color>
-
   <!-- Status bar avatar backgroud chip color -->
-  <color name="statusbar_avatar_bg">@color/material_dynamic_neutral80</color>
+  <color name="statusbar_avatar_bg">@color/material_dynamic_neutral20</color>
 </resources>
