@@ -33,6 +33,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BlendMode;
+import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -49,8 +50,13 @@ import android.graphics.drawable.TransitionDrawable;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
 import android.media.session.PlaybackState;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Process;
 import android.os.Trace;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -246,6 +252,47 @@ public class MediaControlPanel {
     @VisibleForTesting
     MultiRippleController.Companion.RipplesFinishedListener mRipplesFinishedListener;
 
+    private boolean mAlwaysOnTime;
+
+    private final SettingsObserver mSettingsObserver = new SettingsObserver();
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver() {
+            super(new Handler(Looper.getMainLooper()));
+        }
+
+        void observe() {
+            mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.MEDIA_CONTROLS_ALWAYS_SHOW_TIME),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        void stop() {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            switch (uri.getLastPathSegment()) {
+                case Settings.Secure.MEDIA_CONTROLS_ALWAYS_SHOW_TIME:
+                    updateAlwaysOnTime();
+                    if (mSeekBarObserver != null)
+                        mSeekBarObserver.setAlwaysOnTime(mAlwaysOnTime);
+                    mMainExecutor.execute(() ->
+                            updateDisplayForScrubbingChange(mMediaData.getSemanticActions()));
+                    break;
+            }
+        }
+
+        void update() {
+            updateAlwaysOnTime();
+        }
+
+        private void updateAlwaysOnTime() {
+            mAlwaysOnTime = Settings.Secure.getInt(mContext.getContentResolver(),
+                    Settings.Secure.MEDIA_CONTROLS_ALWAYS_SHOW_TIME, 0) == 1;
+        }
+    }
+
     /**
      * Initialize a new control panel
      *
@@ -315,6 +362,7 @@ public class MediaControlPanel {
         mSeekBarViewModel.removeEnabledChangeListener(mEnabledChangeListener);
         mSeekBarViewModel.onDestroy();
         mMediaViewController.onDestroy();
+        mSettingsObserver.stop();
     }
 
     /**
@@ -395,10 +443,13 @@ public class MediaControlPanel {
 
     /** Attaches the player to the player view holder. */
     public void attachPlayer(MediaViewHolder vh) {
+        mSettingsObserver.update();
+        mSettingsObserver.observe();
+
         mMediaViewHolder = vh;
         TransitionLayout player = vh.getPlayer();
 
-        mSeekBarObserver = new SeekBarObserver(vh);
+        mSeekBarObserver = new SeekBarObserver(vh, mAlwaysOnTime);
         mSeekBarViewModel.getProgress().observeForever(mSeekBarObserver);
         mSeekBarViewModel.attachTouchHandlers(vh.getSeekBar());
         mSeekBarViewModel.setScrubbingChangeListener(mScrubbingChangeListener);
@@ -537,6 +588,8 @@ public class MediaControlPanel {
                 }
             });
         }
+
+        mSettingsObserver.update();
 
         // Seek Bar
         if (data.getResumption() && data.getResumeProgress() != null) {
@@ -1233,7 +1286,8 @@ public class MediaControlPanel {
         boolean showInCompact = SEMANTIC_ACTIONS_COMPACT.contains(buttonId);
         boolean hideWhenScrubbing = SEMANTIC_ACTIONS_HIDE_WHEN_SCRUBBING.contains(buttonId);
         boolean shouldBeHiddenDueToScrubbing =
-                scrubbingTimeViewsEnabled(semanticActions) && hideWhenScrubbing && mIsScrubbing;
+                scrubbingTimeViewsEnabled(semanticActions) && hideWhenScrubbing
+                && mIsScrubbing && !mAlwaysOnTime;
         boolean visible = mediaAction != null && !shouldBeHiddenDueToScrubbing;
 
         int notVisibleValue;
@@ -1264,7 +1318,8 @@ public class MediaControlPanel {
         int elapsedTimeId = mMediaViewHolder.getScrubbingElapsedTimeView().getId();
         int totalTimeId = mMediaViewHolder.getScrubbingTotalTimeView().getId();
 
-        boolean visible = scrubbingTimeViewsEnabled(data.getSemanticActions()) && mIsScrubbing;
+        boolean visible = scrubbingTimeViewsEnabled(data.getSemanticActions())
+                && (mIsScrubbing || mAlwaysOnTime);
         setVisibleAndAlpha(expandedSet, elapsedTimeId, visible);
         setVisibleAndAlpha(expandedSet, totalTimeId, visible);
         // Collapsed view is always GONE as set in XML, so doesn't need to be updated dynamically
