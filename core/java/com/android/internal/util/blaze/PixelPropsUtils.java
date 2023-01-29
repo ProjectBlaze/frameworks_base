@@ -36,7 +36,12 @@ public class PixelPropsUtils {
     private static final boolean DEBUG = false;
 
     private static final String SAMSUNG = "com.samsung.android.";
-
+    private static final boolean PRODUCT_SUPPORT_HIGH_FPS =
+            SystemProperties.getBoolean("ro.device.support_high_fps", false);
+    private static final boolean PRODUCT_SUPPORT_CONTENT_REFRESH =
+            SystemProperties.getBoolean("ro.surface_flinger.use_content_detection_for_refresh_rate", false);
+    private static final Map<String, Object> propsToChangePUBG;
+    private static final Map<String, Object> propsToChangeCOD;
     private static final Map<String, Object> propsToChange;
     private static final Map<String, Object> propsToChangePixel5;
     private static final Map<String, Object> propsToChangePixel7Pro;
@@ -44,14 +49,31 @@ public class PixelPropsUtils {
     private static final Map<String, ArrayList<String>> propsToKeep;
 
     private static final String[] packagesToChangePixel7Pro = {
-            "com.google.android.apps.wallpaper",
+            "com.google.android.gms",
             "com.google.android.apps.privacy.wildlife",
-            "com.google.android.apps.subscriptions.red"
+            "com.google.android.apps.wallpaper.pixel",
+            "com.google.android.apps.wallpaper",
+            "com.google.android.apps.subscriptions.red",
+            "com.google.android.inputmethod.latin",
+            "com.google.android.apps.wellbeing",
+            "com.google.android.as",
+            "com.google.android.gms.persistent",
+            "com.google.android.googlequicksearchbox"
+
     };
 
-    private static final String[] packagesToChangePixelXL = {
-            "com.google.android.apps.photos",
-            "com.google.android.inputmethod.latin"
+    private static final String[] packagesToChangeCOD = {
+        "com.activision.callofduty.shooter"
+    };
+
+    private static final String[] packagesToChangePUBG = {
+        "com.tencent.ig",
+        "com.pubg.krmobile",
+        "com.vng.pubgmobile",
+        "com.rekoo.pubgm",
+        "com.pubg.imobile",
+        "com.pubg.newstate",
+        "com.gameloft.android.ANMP.GloftA9HM" // Asphalt 9
     };
 
     private static final String[] extraPackagesToChange = {
@@ -59,6 +81,10 @@ public class PixelPropsUtils {
             "com.android.vending",
             "com.breel.wallpapers20",
             "com.nothing.smartcenter"
+    };
+
+    private static final String[] packagesToChangePixelXL = {
+           "com.google.android.apps.photos",
     };
 
     private static final String[] packagesToKeep = {
@@ -110,7 +136,7 @@ public class PixelPropsUtils {
         propsToChangePixel7Pro.put("DEVICE", "cheetah");
         propsToChangePixel7Pro.put("PRODUCT", "cheetah");
         propsToChangePixel7Pro.put("MODEL", "Pixel 7 Pro");
-        propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ1A.230105.002/9325679:user/release-keys");
+        propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ1A.230105.001.A2/9325679:user/release-keys");
         propsToChangePixel5 = new HashMap<>();
         propsToChangePixel5.put("BRAND", "google");
         propsToChangePixel5.put("MANUFACTURER", "Google");
@@ -125,6 +151,10 @@ public class PixelPropsUtils {
         propsToChangePixelXL.put("PRODUCT", "marlin");
         propsToChangePixelXL.put("MODEL", "Pixel XL");
         propsToChangePixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
+        propsToChangePUBG = new HashMap<>();
+        propsToChangePUBG.put("MODEL", "GM1917");
+        propsToChangeCOD = new HashMap<>();
+        propsToChangeCOD.put("MODEL", "SO-52A");
     }
 
     public static void setProps(String packageName) {
@@ -175,7 +205,31 @@ public class PixelPropsUtils {
                 }
                 return;
             }
-            // Set proper indexing fingerprint
+
+        if (PRODUCT_SUPPORT_HIGH_FPS || PRODUCT_SUPPORT_CONTENT_REFRESH) {
+            if (Arrays.asList(packagesToChangePUBG).contains(packageName)){
+                if (DEBUG){
+                    Log.d(TAG, "Defining props for: " + packageName);
+                }
+                for (Map.Entry<String, Object> prop : propsToChangePUBG.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    setPropValue(key, value);
+                }
+            }
+            if (Arrays.asList(packagesToChangeCOD).contains(packageName)){
+                if (DEBUG){
+                    Log.d(TAG, "Defining props for: " + packageName);
+                }
+                for (Map.Entry<String, Object> prop : propsToChangeCOD.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    setPropValue(key, value);
+                }
+            }
+        }
+
+           // Set proper indexing fingerprint
             if (packageName.equals("com.google.android.settings.intelligence")) {
                 setPropValue("FINGERPRINT", Build.VERSION.INCREMENTAL);
             }
