@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.camera2.CameraAccessException;
@@ -134,6 +135,13 @@ public class BlazeUtils {
        } catch (NameNotFoundException e) {
            return false;
        }
+    }
+
+    public static void switchScreenOff(Context ctx) {
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        if (pm!= null) {
+            pm.goToSleep(SystemClock.uptimeMillis());
+        }
     }
 
     public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
