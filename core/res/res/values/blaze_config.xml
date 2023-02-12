@@ -216,5 +216,8 @@
         <item>com.qualcomm.qti.cne</item>
         <item>com.shannon.imsservice</item>
         <item>org.pixelexperience.faceunlock</item>
-  </string-array>
+    </string-array>
+
+    <!-- Boost Framework -->
+    <bool name="config_supportsBoostFramework">false</bool>
 </resources>
