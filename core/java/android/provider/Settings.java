@@ -5774,12 +5774,6 @@ public final class Settings {
           */
         public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
-	/**
-         * Three Finger Gesture from Oppo
-         * @hide
-         */
-        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
-
         /**
          * GameSpace: List of added games by user
          * @hide
