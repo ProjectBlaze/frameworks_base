@@ -5815,12 +5815,6 @@ public final class Settings {
         public static final String RETICKER_COLORED = "reticker_colored";
 
 	/**
-         * @hide
-         */
-        public static final String QS_TRANSPARENCY = "qs_transparency";
-
-
-	/**
          * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
          * @hide
          */
