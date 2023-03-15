@@ -61,7 +61,6 @@ import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
-import com.android.systemui.qs.tiles.VpnTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
@@ -114,7 +113,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<RefreshRateTile> mRefreshRateTileProvider;
     private final Provider<CompassTile> mCompassTileProvider;
-    private final Provider<VpnTile> mVpnTileProvider;
     private final Provider<AODTile> mAODTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
@@ -161,7 +159,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SoundTile> soundTileProvider,
             Provider<RefreshRateTile> refreshRateTileProvider,
             Provider<CompassTile> compassTileProvider,
-            Provider<VpnTile> vpnTileProvider,
             Provider<AODTile> aodTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
@@ -203,7 +200,6 @@ public class QSFactoryImpl implements QSFactory {
         mSoundTileProvider = soundTileProvider;
         mRefreshRateTileProvider = refreshRateTileProvider;
         mCompassTileProvider = compassTileProvider;
-        mVpnTileProvider = vpnTileProvider;
         mAODTileProvider = aodTileProvider;
     }
 
@@ -295,8 +291,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mRefreshRateTileProvider.get();
             case "compass":
                 return mCompassTileProvider.get();
-            case "vpn":
-                return mVpnTileProvider.get();
             case "aod":
                 return mAODTileProvider.get();
         }
