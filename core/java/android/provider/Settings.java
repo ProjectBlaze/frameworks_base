@@ -5876,6 +5876,11 @@ public final class Settings {
         public static final String STATUSBAR_COLORED_ICONS = "statusbar_colored_icons";
 
         /**
+         * @hide
+         */
+        public static final String QS_PANEL_STYLE = "qs_panel_style";
+
+        /**
          * Whether to enable smart 5G mode
          * @hide
          */

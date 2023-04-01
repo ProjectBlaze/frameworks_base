@@ -260,4 +260,9 @@
     <!-- Rear Display Education -->
     <color name="rear_display_overlay_animation_background_color">#1E1B17</color>
     <color name="rear_display_overlay_dialog_background_color">#1E1B17</color>
+    
+    <!--QS Styles-->
+    <color name="qs_ripple_color">@android:color/system_accent1_400</color>
+    <color name="qs_translucent_bg">#59FFFFFF</color>
+    <color name="qs_white_bg">@android:color/system_neutral1_0</color>
 </resources>
