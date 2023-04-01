@@ -137,6 +137,21 @@ public class ThemeUtils {
         return overlays;
     }
 
+    private static List<String> getFontOverlayPackages() {
+        String category = FONT_KEY;
+        List<String> overlays = new ArrayList<>();
+        List<String> mPkgs = new ArrayList<>();
+        overlays.add("android");
+        for (OverlayInfo info : getOverlayInfosStatic(FONT_KEY, "android")) {
+            if (FONT_KEY.equals(info.getCategory())) {
+                mPkgs.add(info.getPackageName());
+            }
+        }
+        Collections.sort(mPkgs);
+        overlays.addAll(mPkgs);
+        return overlays;
+    }
+
     public List<OverlayInfo> getOverlayInfos(String category) {
         return getOverlayInfos(category, "android");
     }
@@ -145,6 +160,25 @@ public class ThemeUtils {
         final List<OverlayInfo> filteredInfos = new ArrayList<>();
         try {
             List<OverlayInfo> overlayInfos = mOverlayManager
+                    .getOverlayInfosForTarget(target, USER_SYSTEM);
+            for (OverlayInfo overlayInfo : overlayInfos) {
+                if (category.equals(overlayInfo.category)) {
+                    filteredInfos.add(overlayInfo);
+                }
+            }
+        } catch (RemoteException re) {
+            throw re.rethrowFromSystemServer();
+        }
+        filteredInfos.sort(OVERLAY_INFO_COMPARATOR);
+        return filteredInfos;
+    }
+
+    private static List<OverlayInfo> getOverlayInfosStatic(String category, String target) {
+        final IOverlayManager overlayManager = IOverlayManager.Stub
+                .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+        final List<OverlayInfo> filteredInfos = new ArrayList<>();
+        try {
+            List<OverlayInfo> overlayInfos = overlayManager
                     .getOverlayInfosForTarget(target, USER_SYSTEM);
             for (OverlayInfo overlayInfo : overlayInfos) {
                 if (category.equals(overlayInfo.category)) {
@@ -230,5 +264,23 @@ public class ThemeUtils {
             }
         }
         return true;
+    }
+
+    public static String getCurrentClockFontOverlay() {
+        final IOverlayManager overlayManager = IOverlayManager.Stub
+                .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+        for (String overlayPackage : getFontOverlayPackages()) {
+            try {
+                OverlayInfo info = overlayManager.getOverlayInfo(overlayPackage, USER_SYSTEM);
+                if (info != null && info.isEnabled()) {
+                    return info.packageName.toLowerCase();
+                } else {
+                    continue;
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
