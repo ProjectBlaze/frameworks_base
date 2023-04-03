@@ -214,7 +214,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private var vertical = false
     private val forceHideCheveron = true
     private var labelHide = false
-    private var labelSize = 14f
+   private var labelSize = 15f
 
     init {
         setId(generateViewId())
