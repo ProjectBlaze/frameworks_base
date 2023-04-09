@@ -16,9 +16,12 @@
 
 package com.android.systemui.qs;
 
+import static com.android.systemui.util.qs.QSStyleUtils.isRoundQS;
+
 import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -60,6 +63,15 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
         mMaxColumnsPortrait = getResources().getInteger(R.integer.quick_qs_panel_num_columns);
         mMaxColumnsLandscape = getResources().getInteger(R.integer.quick_qs_panel_num_columns_landscape);
         mMaxColumnsMediaPlayer = getResources().getInteger(R.integer.quick_qs_panel_num_columns_media);
+        if (isRoundQS()) {
+            mMaxColumnsPortrait = Settings.Secure.getInt(context.getContentResolver(),
+                    Settings.Secure.QQS_NUM_COLUMNS, mMaxColumnsPortrait);
+            mMaxColumnsLandscape = Settings.Secure.getInt(context.getContentResolver(),
+                    Settings.Secure.QQS_NUM_COLUMNS_LANDSCAPE, mMaxColumnsLandscape);
+
+            mMaxTiles = Math.max(mMaxColumnsPortrait, mMaxColumnsLandscape);
+            mMaxTiles = Math.max(mMaxColumnsMediaPlayer, mMaxTiles);
+        }
     }
 
     @Override
