@@ -1413,10 +1413,6 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         }
     }
 
-    private void hideFaceRecognizingMessage(){
-        showBouncerMessage("", null);
-    }
-
     @Override
     public ViewRootImpl getViewRootImpl() {
         ViewGroup viewGroup = mNotificationShadeWindowController.getNotificationShadeView();
