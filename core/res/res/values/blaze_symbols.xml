@@ -20,6 +20,10 @@
     <!-- Whether key handler sends intent when changing slider position -->
     <java-symbol type="string" name="config_alertSliderIntent" />
 
+    <!-- Button backlight -->
+    <java-symbol type="integer" name="config_deviceSupportsButtonBrightnessControl" />
+    <java-symbol type="dimen" name="config_buttonBrightnessSettingDefaultFloat" />
+
     <!-- Whether device supports an alt. ambient display -->
     <java-symbol type="bool" name="config_alt_ambient_display"/>
 
