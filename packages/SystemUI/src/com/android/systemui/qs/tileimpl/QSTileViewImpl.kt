@@ -215,6 +215,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private val forceHideCheveron = true
     private var labelHide = false
    private var labelSize = 15f
+   private var secondaryLabelSize = 13f
 
     init {
         setId(generateViewId())
@@ -229,6 +230,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
         labelHide = QSLayoutUtils.getQSTileLabelHide(context)
         labelSize = QSLayoutUtils.getQSTileLabelSize(context)
+        secondaryLabelSize = QSLayoutUtils.getQSTileSecondaryLabelSize(context)
 
         if (labelHide)
             gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
@@ -293,7 +295,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     fun updateResources() {
         label.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
-        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
+        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondaryLabelSize)
 
 	if (isA11Style) {
 	    updateA11StyleResources()

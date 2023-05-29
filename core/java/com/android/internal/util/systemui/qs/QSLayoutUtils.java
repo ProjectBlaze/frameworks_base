@@ -40,6 +40,12 @@ public class QSLayoutUtils {
          0, UserHandle.USER_CURRENT) == 1;
    }
 
+    public static float getQSTileSecondaryLabelSize(Context context) {
+        return (float) Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_SECONDARY_LABEL_SIZE,
+                13, UserHandle.USER_CURRENT);
+    }
+
    public static int getQsUiStyle(Context context) {
        return Settings.System.getIntForUser(context.getContentResolver(),
          Settings.System.QS_UI_STYLE,

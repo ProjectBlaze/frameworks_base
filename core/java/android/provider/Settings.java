@@ -5941,6 +5941,11 @@ public final class Settings {
         public static final String QS_TILE_LABEL_SIZE = "qs_tile_label_size";
 
         /**
+         * @hide
+         */
+        public static final String QS_TILE_SECONDARY_LABEL_SIZE = "qs_tile_secondary_label_size";
+
+        /**
          * These are all public system settings
          *
          * @hide
