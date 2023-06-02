@@ -42,12 +42,14 @@ import android.media.session.MediaController;
 import android.media.session.MediaController.PlaybackInfo;
 import android.media.session.MediaSession.Token;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.service.notification.Condition;
 import android.service.notification.ZenModeConfig;
@@ -231,7 +233,7 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
                 .isAccessibilityVolumeStreamActive();
         mVolumeController.setA11yMode(accessibilityVolumeStreamActive ?
                     VolumePolicy.A11Y_MODE_INDEPENDENT_A11Y_VOLUME :
-                        VolumePolicy.A11Y_MODE_MEDIA_A11Y_VOLUME);
+                        VolumePolicy.A11Y_MODE_MEDIA_A11Y_VOLUME);                
 
         mWakefulnessLifecycle.addObserver(mWakefullnessLifecycleObserver);
     }
@@ -490,6 +492,10 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         }
         if (changed && fromKey) {
             Events.writeEvent(Events.EVENT_KEY, stream, lastAudibleStreamVolume);
+        }
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 && Settings.System.getInt(mContext.getContentResolver(), Settings.System.HAPTIC_ON_SLIDER, 1) != 0) {
+                AsyncTask.execute(() ->
+                        mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_TICK)));
         }
         return changed;
     }

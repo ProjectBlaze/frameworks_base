@@ -89,5 +89,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.TORCH_POWER_BUTTON_GESTURE,
+        Settings.System.HAPTIC_ON_SLIDER
     };
 }
