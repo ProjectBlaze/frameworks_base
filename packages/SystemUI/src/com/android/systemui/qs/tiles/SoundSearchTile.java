@@ -76,14 +76,8 @@ public class SoundSearchTile extends QSTileImpl<BooleanState> {
     @Override
     protected void handleClick(@Nullable View view) {
         mHost.collapsePanels();
-        // Shazam
-        if (BlazeUtils.isPackageInstalled(mContext, "com.shazam.android") || BlazeUtils.isPackageInstalled(mContext, "com.shazam.encore.android")) {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.setAction("com.shazam.android.intent.actions.START_TAGGING");
-            mContext.startActivity(intent);
         // Soundhound
-        } else if (BlazeUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier.freemium") || BlazeUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier")) {
+        if (BlazeUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier.freemium") || BlazeUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.setAction("com.soundhound.android.ID_NOW_EXTERNAL");
