@@ -487,7 +487,8 @@ public final class SystemServer implements Dumpable {
     /**
      * The pending WTF to be logged into dropbox.
      */
-    private static LinkedList<Pair<String, ApplicationErrorReport.CrashInfo>> sPendingWtfs;
+    private static LinkedList<Pair<String, ApplicationErrorReport.CrashInfo
+>> sPendingWtfs;
 
     /** Start the IStats services. This is a blocking call and can take time. */
     private static native void startIStatsService();
@@ -1678,6 +1679,11 @@ public final class SystemServer implements Dumpable {
                 mSystemServiceManager.startService(AutoAODService.class);
                 t.traceEnd();
             }
+
+            t.traceBegin("StartSmart5gService");
+            mSystemServiceManager.startService(Smart5gService.class);
+            t.traceEnd();
+
         } catch (Throwable e) {
             Slog.e("System", "******************************************");
             Slog.e("System", "************ Failure starting core service");
