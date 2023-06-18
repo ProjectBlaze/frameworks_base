@@ -14,4 +14,9 @@
     <dimen name="qs_top_brightness_margin_top">8dp</dimen>
     <dimen name="qs_top_brightness_margin_bottom">10dp</dimen>
     <dimen name="qs_bottom_brightness_margin_top">10dp</dimen>
+
+    <!-- QS Paddings -->
+    <dimen name="custom_qs_panel_padding_top">0dp</dimen>
+    <dimen name="custom_notification_row_padding">16dp</dimen>
+    <dimen name="custom_qs_tile_label_line_height">20sp</dimen>
 </resources>

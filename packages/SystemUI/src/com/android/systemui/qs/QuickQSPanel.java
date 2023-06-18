@@ -221,7 +221,7 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
     void setDisabledByPolicy(boolean disabled) {
         if (disabled != mDisabledByPolicy) {
             mDisabledByPolicy = disabled;
-            setVisibility(disabled ? GONE : VISIBLE);
+            setVisibility(disabled ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -234,10 +234,10 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
     @Override
     public void setVisibility(int visibility) {
         if (mDisabledByPolicy) {
-            if (getVisibility() == GONE) {
+            if (getVisibility() == View.GONE) {
                 return;
             }
-            visibility = GONE;
+            visibility = View.GONE;
         }
         super.setVisibility(visibility);
     }
@@ -341,11 +341,11 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
             // We set it as not important while we change this, so setting each tile as selected
             // will not cause them to announce themselves until the user has actually selected the
             // item.
-            setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+            setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
             for (int i = 0; i < getChildCount(); i++) {
                 getChildAt(i).setSelected(selected);
             }
-            setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_AUTO);
+            setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_AUTO);
             mLastSelected = selected;
         }
     }
