@@ -3187,7 +3187,7 @@
     <bool name="config_hasPermanentDpad">false</bool>
 
     <!-- default window inset isRound property -->
-    <bool name="config_windowIsRound">false</bool>
+    <bool name="config_windowIsRound">true</bool>
 
     <!-- Override this value if the device has a chin, i.e. area that is not actual part of the
          screen but you would like to be treated as a real display. The value is the height of the
@@ -4041,7 +4041,7 @@
     <integer name="config_keepPreloadsMinDays">7</integer>
 
     <!-- Flag indicating whether round icons should be parsed from the application manifest. -->
-    <bool name="config_useRoundIcon">false</bool>
+    <bool name="config_useRoundIcon">true</bool>
 
     <!-- Flag indicating whether the assist disclosure can be disabled using
          ASSIST_DISCLOSURE_ENABLED. -->
