@@ -36,27 +36,32 @@ public class GamesPropsUtils extends PixelPropsUtils {
     private static final boolean DEBUG = true;
     private static final boolean DEBUG_PACKAGES = false;
 
-    private static final String MODEL_ROG1 = "ASUS_Z01QD";
+    private static final String MODEL_ROG6 = "ASUS_AI2201";
     private static final String MODEL_XP5 = "SO-52A";
     private static final String MODEL_OP8P = "IN2020";
     private static final String MODEL_OP9P = "LE2123";
-    private static final String MODEL_MI11 = "M2102K1G";
+    private static final String MODEL_MI11T = "21081111RG";
+    private static final String MODEL_MI13P = "2210132C";
+    private static final String MODEL_K30U = "M2006J10C";
 
-    private static final Set<String> sRog1Packages = Set.of(
-        "com.dts.freefireth",
-        "com.dts.freefiremax",
-        "com.madfingergames.legends"
+    private static final Set<String> sRog6Packages = Set.of(
+        "com.activision.callofduty.shooter",
+        "com.ea.gp.fifamobile",
+        "com.gameloft.android.ANMP.GloftA9HM",
+        "com.madfingergames.legends",
+        "com.mobile.legends",
+        "com.pearlabyss.blackdesertm",
+        "com.pearlabyss.blackdesertm.gl"
     );
 
     private static final Set<String> sXp5Packages = Set.of(
-        "com.tencent.tmgp.kr.codm",
         "com.garena.game.codm",
+        "com.tencent.tmgp.kr.codm",
         "com.vng.codmvn"
     );
 
     private static final Set<String> sOp8pPackages = Set.of(
         "com.tencent.ig",
-        "com.pubg.imobile",
         "com.pubg.krmobile",
         "com.vng.pubgmobile",
         "com.rekoo.pubgm",
@@ -69,24 +74,37 @@ public class GamesPropsUtils extends PixelPropsUtils {
 
     private static final Set<String> sOp9pPackages = Set.of(
         "com.epicgames.fortnite",
-        "com.epicgames.portal"
+        "com.epicgames.portal",
+        "com.tencent.lolm"
     );
 
-    private static final Set<String> sMi11Packages = Set.of(
+    private static final Set<String> sMI11TPackages = Set.of(
         "com.ea.gp.apexlegendsmobilefps",
         "com.levelinfinite.hotta.gp",
+        "com.supercell.clashofclans",
+        "com.vng.mlbbvn"
+    );
+
+    private static final Set<String> sMI13PPackages = Set.of(
+        "com.levelinfinite.sgameGlobal",
         "com.tencent.tmgp.sgame"
+    );
+
+    private static final Set<String> sK30UPackages = Set.of(
+        "com.pubg.imobile"
     );
 
     private static final Map<String, String> sPackagesModelMap = new HashMap<String, String>();
 
     static {
         Map.of(
-            sRog1Packages, MODEL_ROG1,
+            sRog6Packages, MODEL_ROG6,
             sXp5Packages,  MODEL_XP5,
             sOp8pPackages, MODEL_OP8P,
             sOp9pPackages, MODEL_OP9P,
-            sMi11Packages, MODEL_MI11
+            sMI11TPackages, MODEL_MI11T,
+	    sMI13PPackages, MODEL_MI13P,
+	    sK30UPackages, MODEL_K30U
         ).forEach((k, v) -> k.forEach(p -> sPackagesModelMap.put(p, v)));
     }
 
