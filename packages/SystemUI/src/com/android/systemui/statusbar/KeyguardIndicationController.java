@@ -976,6 +976,20 @@ public class KeyguardIndicationController {
                     : R.string.keyguard_plugged_in;
         }
 
+        String percentage = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
+        if (hasChargingTime) {
+            String chargingTimeFormatted = Formatter.formatShortElapsedTimeRoundingUpToMinutes(
+                    mContext, mChargingTimeRemaining);
+            String chargingText = mContext.getResources().getString(chargingId, chargingTimeFormatted,
+                    percentage);
+            return chargingText + getBatteryInfo();
+        } else {
+            String chargingText =  mContext.getResources().getString(chargingId, percentage);
+            return chargingText + getBatteryInfo();
+        }
+    }
+
+    protected String getBatteryInfo() {
         String batteryInfo = "";
         int current = 0;
         double voltage = 0;
@@ -991,33 +1005,22 @@ public class KeyguardIndicationController {
             }
             if (mChargingVoltage > 0 && mChargingCurrent > 0) {
                 voltage = mChargingVoltage / 1000 / 1000;
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
+                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " • ") +
                         String.format("%.1f" , ((double) current / 1000) * voltage) + "W";
             }
             if (mChargingVoltage > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
+                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " • ") +
                         String.format("%.1f" , voltage) + "V";
             }
             if (mTemperature > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
+                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " • ") +
                         mTemperature / 10 + "°C";
             }
             if (batteryInfo != "") {
                 batteryInfo = "\n" + batteryInfo;
             }
         }
-
-        String percentage = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
-        if (hasChargingTime) {
-            String chargingTimeFormatted = Formatter.formatShortElapsedTimeRoundingUpToMinutes(
-                    mContext, mChargingTimeRemaining);
-            String chargingText = mContext.getResources().getString(chargingId, chargingTimeFormatted,
-                    percentage);
-            return chargingText + batteryInfo;
-        } else {
-            String chargingText =  mContext.getResources().getString(chargingId, percentage);
-            return chargingText + batteryInfo;
-        }
+        return batteryInfo;
     }
 
     public void setStatusBarKeyguardViewManager(
