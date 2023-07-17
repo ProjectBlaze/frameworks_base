@@ -5695,6 +5695,12 @@ public final class Settings {
          */
         public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
 
+         /**
+         * Settings Dashboard Style
+         * @hide
+         */
+        public static final String SETTINGS_DASHBOARD_STYLE = "settings_dashboard_style";
+
 	/**
          * Adaptive playback
          * Automatically pause media when the volume is muted and
