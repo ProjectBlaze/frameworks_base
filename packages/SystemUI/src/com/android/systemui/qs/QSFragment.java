@@ -110,7 +110,6 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
     private float mSquishinessFraction = 1;
     private boolean mQsDisabled;
     private int[] mLocationTemp = new int[2];
-    private int mQSPanelScrollY = 0;
 
     private final RemoteInputQuickSettingsDisabler mRemoteInputQuickSettingsDisabler;
     private final MediaHost mQsMediaHost;
@@ -236,7 +235,6 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
         mQSPanelScrollView.setOnScrollChangeListener(
                 (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                     // Lazily update animators whenever the scrolling changes
-                    mQSPanelScrollY = scrollY;
                     mQSAnimator.requestAnimatorUpdate();
                     if (mScrollListener != null) {
                         mScrollListener.onQsPanelScrollChanged(scrollY);
@@ -396,7 +394,6 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
             }
         }
         updateQsState();
-        mHeader.setExpandedScrollAmount(Math.max(mQSPanelScrollY, mQSPanelScrollView.getScrollY()));
     }
 
     @Override
