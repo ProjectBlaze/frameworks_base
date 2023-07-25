@@ -80,7 +80,7 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
             addView(mBrightnessView);
 
             TunerService tunerService = Dependency.get(TunerService.class);
-            if (tunerService.getValue(QS_BRIGHTNESS_SLIDER, 2) > 1) {
+            if (tunerService.getValue(QS_SHOW_BRIGHTNESS_SLIDER, 2) > 1) {
                 mBrightnessView.setVisibility(VISIBLE);
             }
         }
