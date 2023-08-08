@@ -2196,10 +2196,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         mWindowManagerInternal.registerAppTransitionListener(new AppTransitionListener() {
+            private boolean mOccludeChangingInTransition = false;
+
             @Override
             public int onAppTransitionStartingLocked(boolean keyguardGoingAway,
                     boolean keyguardOccluding, long duration, long statusBarAnimationStartTime,
                     long statusBarAnimationDuration) {
+                mOccludeChangingInTransition = keyguardGoingAway || keyguardOccluding;
+
                 // When remote animation is enabled for KEYGUARD_GOING_AWAY transition, SysUI
                 // receives IRemoteAnimationRunner#onAnimationStart to start animation, so we don't
                 // need to call IKeyguardService#keyguardGoingAway here.
@@ -2215,6 +2219,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         0 /* duration */);
 
                 synchronized (mLock) {
+                    if (mOccludeChangingInTransition) {
+                        mKeyguardOccludedChanged = true;
+                        mOccludeChangingInTransition = false;
+                    }
+                    applyKeyguardOcclusionChange(false);
                     mLockAfterAppTransitionFinished = false;
                 }
             }
@@ -2222,12 +2231,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             @Override
             public void onAppTransitionFinishedLocked(IBinder token) {
                 synchronized (mLock) {
+                    if (mOccludeChangingInTransition) {
+                        mKeyguardOccludedChanged = true;
+                        mOccludeChangingInTransition = false;
+                    }
+                    applyKeyguardOcclusionChange(false /* transitionStarted */);
                     if (!mLockAfterAppTransitionFinished) {
                         return;
                     }
                     mLockAfterAppTransitionFinished = false;
                 }
-
                 lockNow(null);
             }
         });
@@ -3521,7 +3534,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mKeyguardOccludedChanged) {
             if (DEBUG_KEYGUARD) Slog.d(TAG, "transition/occluded changed occluded="
                     + mPendingKeyguardOccluded);
-            if (setKeyguardOccludedLw(mPendingKeyguardOccluded, false /* force */,
+            if (setKeyguardOccludedLw(mPendingKeyguardOccluded, true /* force */,
                     transitionStarted)) {
                 return FINISH_LAYOUT_REDO_LAYOUT | FINISH_LAYOUT_REDO_WALLPAPER;
             }
@@ -3782,6 +3795,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean setKeyguardOccludedLw(boolean isOccluded, boolean force,
             boolean transitionStarted) {
         if (DEBUG_KEYGUARD) Slog.d(TAG, "setKeyguardOccluded occluded=" + isOccluded);
+        mPendingKeyguardOccluded = isOccluded;
         mKeyguardOccludedChanged = false;
         if (isKeyguardOccluded() == isOccluded && !force) {
             return false;
@@ -5009,11 +5023,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     // Called on the DisplayManager's DisplayPowerController thread.
     @Override
-    public void screenTurnedOff(int displayId) {
+    public void screenTurnedOff(int displayId, boolean isSwappingDisplay) {
         if (DEBUG_WAKEUP) Slog.i(TAG, "Display" + displayId + " turned off...");
 
         if (displayId == DEFAULT_DISPLAY) {
-            updateScreenOffSleepToken(true);
+            updateScreenOffSleepToken(true, isSwappingDisplay);
             mRequestedOrSleepingDefaultDisplay = false;
             mDefaultDisplayPolicy.screenTurnedOff();
             synchronized (mLock) {
@@ -5064,7 +5078,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (displayId == DEFAULT_DISPLAY) {
             Trace.asyncTraceBegin(Trace.TRACE_TAG_WINDOW_MANAGER, "screenTurningOn",
                     0 /* cookie */);
-            updateScreenOffSleepToken(false);
+            updateScreenOffSleepToken(false /* acquire */, false /* isSwappingDisplay */);
             mDefaultDisplayPolicy.screenTurnedOn(screenOnListener);
             mBootAnimationDismissable = false;
 
@@ -5583,9 +5597,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     // TODO (multidisplay): Support multiple displays in WindowManagerPolicy.
-    private void updateScreenOffSleepToken(boolean acquire) {
+    private void updateScreenOffSleepToken(boolean acquire, boolean isSwappingDisplay) {
         if (acquire) {
-            mScreenOffSleepTokenAcquirer.acquire(DEFAULT_DISPLAY);
+            mScreenOffSleepTokenAcquirer.acquire(DEFAULT_DISPLAY, isSwappingDisplay);
         } else {
             mScreenOffSleepTokenAcquirer.release(DEFAULT_DISPLAY);
         }
