@@ -33,7 +33,6 @@ import android.os.UserHandle;
 import android.util.Log;
 import android.util.MathUtils;
 import android.util.Pair;
-import android.view.CrossWindowBlurListeners;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -183,9 +182,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
      */
     public static final float BUSY_SCRIM_ALPHA = 1f;
 
-    public static float mCustomScrimAlpha = 0.80f;
-
-    public static float QS_CLIP_SCRIM_ALPHA = 0.80f;
+    public static float mCustomScrimAlpha = 1f;
 
     /**
      * Scrim opacity that can have text on top.
@@ -314,8 +311,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         mLargeScreenShadeInterpolator = largeScreenShadeInterpolator;
         mFeatureFlags = featureFlags;
         mDefaultScrimAlpha = BUSY_SCRIM_ALPHA;
-        CrossWindowBlurListeners mBlurSupport = CrossWindowBlurListeners.getInstance();
-        QS_CLIP_SCRIM_ALPHA = mBlurSupport.isCrossWindowBlurEnabled() ? 0.8f : 1.0f;
 
         mKeyguardStateController = keyguardStateController;
         mDarkenWhileDragging = !mKeyguardStateController.canDismissLockScreen();
@@ -380,7 +375,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             states[i].init(mScrimInFront, mScrimBehind, mDozeParameters, mDockManager);
             states[i].setScrimBehindAlphaKeyguard(mScrimBehindAlphaKeyguard);
             states[i].setDefaultScrimAlpha(mDefaultScrimAlpha);
-            states[i].setQSClipScrimAlpha(QS_CLIP_SCRIM_ALPHA);
         }
 
         mScrimBehind.setDefaultFocusHighlightEnabled(false);
@@ -876,7 +870,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                 } else if (mClipsQsScrim) {
                     float behindFraction = getInterpolatedFraction();
                     behindFraction = (float) Math.pow(behindFraction, 0.8f);
-                    mBehindAlpha = mCustomScrimAlpha;
+                    mBehindAlpha = 1;
                     mNotificationsAlpha = behindFraction * mCustomScrimAlpha;
                 } else {
                     if (mFeatureFlags.isEnabled(Flags.LARGE_SHADE_GRANULAR_ALPHA_INTERPOLATION)) {

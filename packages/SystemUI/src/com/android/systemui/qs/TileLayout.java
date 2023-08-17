@@ -122,8 +122,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     public boolean updateResources() {
         final Resources res = mContext.getResources();
-        mResourceColumns = Math.max(1, res.getInteger(R.integer.quick_qs_panel_max_tiles));
-        updateColumns();
+        mResourceColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
         mMaxCellHeight = mContext.getResources().getDimensionPixelSize(mCellHeightResId);
         mCellMarginHorizontal = res.getDimensionPixelSize(R.dimen.qs_tile_margin_horizontal);
         mSidePadding = useSidePadding() ? mCellMarginHorizontal / 2 : 0;
@@ -141,7 +140,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         return true;
     }
 
-    public boolean updateColumns() {
+    private boolean updateColumns() {
         int oldColumns = mColumns;
         mColumns = Math.min(mResourceColumns, mMaxColumns);
         return oldColumns != mColumns;

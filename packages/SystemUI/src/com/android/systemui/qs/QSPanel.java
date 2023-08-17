@@ -105,10 +105,7 @@ public class QSPanel extends LinearLayout implements Tunable {
     private PageIndicator mFooterPageIndicator;
     private int mContentMarginStart;
     private int mContentMarginEnd;
-    private int mMaxColumnsPortrait;
-    private int mMaxColumnsLandscape;
-    private int mMaxColumnsMediaPlayer;
-    protected boolean mUsingHorizontalLayout;
+    private boolean mUsingHorizontalLayout;
 
     @Nullable
     private LinearLayout mHorizontalLinearLayout;
@@ -136,9 +133,6 @@ public class QSPanel extends LinearLayout implements Tunable {
                 R.dimen.quick_settings_bottom_margin_media);
         mMediaTopMargin = getResources().getDimensionPixelSize(
                 R.dimen.qs_tile_margin_vertical);
-        mMaxColumnsPortrait = getResources().getInteger(R.integer.qs_panel_num_columns);
-        mMaxColumnsLandscape = getResources().getInteger(R.integer.qs_panel_num_columns_landscape);
-        mMaxColumnsMediaPlayer = getResources().getInteger(R.integer.qs_panel_num_columns_media);
         mContext = context;
 
         setOrientation(VERTICAL);
@@ -149,7 +143,7 @@ public class QSPanel extends LinearLayout implements Tunable {
                 com.android.internal.R.bool.config_automatic_brightness_available);
 
         TunerService tunerService = Dependency.get(TunerService.class);
-        mTop = tunerService.getValue(QS_BRIGHTNESS_SLIDER_POSITION, 1) == 0;
+        mTop = tunerService.getValue(QS_BRIGHTNESS_SLIDER_POSITION, 0) == 0;
     }
 
     void initialize(QSLogger qsLogger) {
@@ -197,7 +191,6 @@ public class QSPanel extends LinearLayout implements Tunable {
         mClippingRect.left = 0;
         mClippingRect.top = -1000;
         mHorizontalContentContainer.setClipBounds(mClippingRect);
-        updateColumns();
     }
 
     /**
@@ -362,13 +355,13 @@ public class QSPanel extends LinearLayout implements Tunable {
         switch (key) {
             case QS_SHOW_BRIGHTNESS_SLIDER:
                 boolean value =
-                       TunerService.parseInteger(newValue, 2) >= 1;
+                       TunerService.parseInteger(newValue, 1) >= 1;
                 if (mBrightnessView != null) {
                     mBrightnessView.setVisibility(value ? VISIBLE : GONE);
                 }
                 break;
             case QS_BRIGHTNESS_SLIDER_POSITION:
-                mTop = TunerService.parseInteger(newValue, 1) == 0;
+                mTop = TunerService.parseInteger(newValue, 0) == 0;
                 updateBrightnessSliderPosition();
                 break;
             case QS_SHOW_AUTO_BRIGHTNESS:
@@ -668,18 +661,6 @@ public class QSPanel extends LinearLayout implements Tunable {
         }
     }
 
-    public void updateColumns() {
-        boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-
-        int mColumnsMediaPlayer = mUsingHorizontalLayout ?
-            mMaxColumnsMediaPlayer :
-            mMaxColumnsLandscape;
-
-        mTileLayout.setMaxColumns(isLandscape ?
-            mColumnsMediaPlayer :
-            mMaxColumnsPortrait);
-    }
-
     void setUsingHorizontalLayout(boolean horizontal, ViewGroup mediaHostView, boolean force) {
         if (horizontal != mUsingHorizontalLayout || force) {
             Log.d(getDumpableTag(), "setUsingHorizontalLayout: " + horizontal + ", " + force);
@@ -692,7 +673,8 @@ public class QSPanel extends LinearLayout implements Tunable {
             }
             reAttachMediaHost(mediaHostView, horizontal);
             if (needsDynamicRowsAndColumns()) {
-                updateColumns();
+                mTileLayout.setMinRows(horizontal ? 2 : 1);
+                mTileLayout.setMaxColumns(horizontal ? 2 : 4);
             }
             updateMargins(mediaHostView);
             if (mHorizontalLinearLayout == null) return;
