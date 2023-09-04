@@ -159,7 +159,7 @@ public class QSContainerImpl extends FrameLayout implements Dumpable {
         int topPadding = QSUtils.getQsHeaderSystemIconsAreaHeight(mContext);
         if (!LargeScreenUtils.shouldUseLargeScreenShadeHeader(mContext.getResources())) {
             topPadding = mContext.getResources()
-                    .getDimensionPixelSize(R.dimen.large_screen_shade_header_height);
+                    .getDimensionPixelSize(R.dimen.qqs_offset_custom_big);
         }
         mQSPanelContainer.setPaddingRelative(
                 mQSPanelContainer.getPaddingStart(),
