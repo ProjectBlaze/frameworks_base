@@ -5946,6 +5946,12 @@ public final class Settings {
         public static final String QS_TILE_SECONDARY_LABEL_SIZE = "qs_tile_secondary_label_size";
 
         /**
+          * QS header size
+          * @hide
+          */
+        public static final String QS_HEADER_SIZE = "qs_header_size";
+        
+        /**
          * These are all public system settings
          *
          * @hide
@@ -6067,6 +6073,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FRAME_RATE_RECORDER);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_MENU);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_DIALOG_DIM);
+            PRIVATE_SETTINGS.add(QS_HEADER_SIZE);
         }
 
         /**

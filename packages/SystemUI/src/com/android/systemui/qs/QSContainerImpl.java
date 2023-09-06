@@ -27,6 +27,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import android.provider.Settings;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
 import com.android.systemui.qs.customize.QSCustomizer;
@@ -158,8 +159,8 @@ public class QSContainerImpl extends FrameLayout implements Dumpable {
             QuickStatusBarHeaderController quickStatusBarHeaderController) {
         int topPadding = QSUtils.getQsHeaderSystemIconsAreaHeight(mContext);
         if (!LargeScreenUtils.shouldUseLargeScreenShadeHeader(mContext.getResources())) {
-            topPadding = mContext.getResources()
-                    .getDimensionPixelSize(R.dimen.qqs_offset_custom_big);
+            topPadding = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_SIZE, 110);
         }
         mQSPanelContainer.setPaddingRelative(
                 mQSPanelContainer.getPaddingStart(),
