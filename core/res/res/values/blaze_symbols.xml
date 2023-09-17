@@ -142,4 +142,9 @@
 
     <!-- Array of brightness-alpha lut for framework dimming -->
     <java-symbol type="array" name="config_udfpsDimmingBrightnessAlphaArray" />
+
+    <!-- The amount of delay to add when disabling the dimming.
+         This is used to prevent flickers due to the dimming being disabled
+         before the screen has had chance to switch out of HBM mode -->
+    <java-symbol type="integer" name="config_udfpsDimmingDisableDelay" />
 </resources>
