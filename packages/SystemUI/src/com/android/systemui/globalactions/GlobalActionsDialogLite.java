@@ -859,7 +859,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     public void onUiModeChanged() {
         // Colors may change, depending on UI mode
         mContext.getTheme().applyStyle(mContext.getThemeResId(), true);
-        if (mDialog != null) {
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.refreshDialog();
         }
     }
