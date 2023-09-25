@@ -115,7 +115,7 @@
                     android:paddingRight="@dimen/volume_dialog_ringer_rows_padding">
                     <com.android.keyguard.AlphaOptimizedImageButton
                         android:id="@+id/app_volume"
-                        android:src="@drawable/ic_app_volume"
+                        android:src="@drawable/volume_settings"
                         android:layout_width="@dimen/volume_dialog_tap_target_size"
                         android:layout_height="@dimen/volume_dialog_tap_target_size"
                         android:layout_gravity="center"
