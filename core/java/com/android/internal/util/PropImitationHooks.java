@@ -52,7 +52,7 @@ public class PropImitationHooks {
     
     private static final String PRODUCT_DEVICE = "ro.product.device";
 
-    private static final String sMainFP = "google/husky/husky:14/UD1A.230803.041/10808477:user/release-keys";
+    private static final String sMainFP = "google/felix/felix:14/UP1A.231005.007.A1/10762838:user/release-keys";
     private static final String sStockFp = SystemProperties.get("ro.vendor.build.fingerprint");
 
     private static final String PACKAGE_ARCORE = "com.google.ar.core";
@@ -72,7 +72,7 @@ public class PropImitationHooks {
     private static final ComponentName GMS_ADD_ACCOUNT_ACTIVITY = ComponentName.unflattenFromString(
             "com.google.android.gms/.auth.uiflows.minutemaid.MinuteMaidActivity");
 
-    private static final Map<String, Object> sP8ProProps = createGoogleSpoofProps("husky", "Pixel 8 Pro", sMainFP);
+    private static final Map<String, Object> sPFoldProps = createGoogleSpoofProps("felix", "Pixel Fold", sMainFP);
     private static final Map<String, Object> gPhotosProps = createGoogleSpoofProps("marlin", "Pixel XL", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
     private static final Map<String, Object> asusROG1Props = createGameProps("ASUS_Z01QD", "Asus");
     private static final Map<String, Object> asusROG3Props = createGameProps("ASUS_I003D", "Asus");
@@ -189,11 +189,11 @@ public class PropImitationHooks {
                 case PACKAGE_GMS:
                 case PACKAGE_GCAM:
                     if (packageName.equals(PACKAGE_GCAM) && !SystemProperties.getBoolean("persist.sys.pixelprops.gcam", false)) {
-                        dlog("Not spoofing as Pixel 8 Pro for: " + packageName);
+                        dlog("Not spoofing as Pixel Fold for: " + packageName);
                         break;
                     }
-                    dlog("Spoofing as Pixel 8 Pro for: " + packageName);
-                    sP8ProProps.forEach((k, v) -> setPropValue(k, v));
+                    dlog("Spoofing as Pixel Fold for: " + packageName);
+                    sPFoldProps.forEach((k, v) -> setPropValue(k, v));
                     break;
                 case PACKAGE_ARCORE:
                     dlog("Setting stock fingerprint for: " + packageName);
