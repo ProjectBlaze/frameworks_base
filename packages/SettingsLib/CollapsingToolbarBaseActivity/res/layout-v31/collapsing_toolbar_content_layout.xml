@@ -35,7 +35,7 @@
             android:clipToPadding="false"
             app:forceApplySystemWindowInsetTop="true"
             app:extraMultilineHeightEnabled="true"
-            app:contentScrim="@color/settingslib_colorSurfaceHeader"
+            app:contentScrim="@android:color/transparent"
             app:maxLines="3"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:scrimAnimationDuration="50"
@@ -46,7 +46,8 @@
             app:expandedTitleTextAppearance="@style/CollapsingToolbarTitle.Expanded"
             app:expandedTitleMarginStart="@dimen/expanded_title_margin_start"
             app:expandedTitleMarginEnd="@dimen/expanded_title_margin_end"
-            app:toolbarId="@id/action_bar">
+            app:toolbarId="@id/action_bar"
+            app:expandedTitleGravity="bottom|center_horizontal">
 
             <Toolbar
                 android:id="@+id/action_bar"
