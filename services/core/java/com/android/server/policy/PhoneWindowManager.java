@@ -2706,15 +2706,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mStylusButtonsEnabled = Settings.Secure.getIntForUser(resolver,
                     Secure.STYLUS_BUTTONS_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
             mInputManagerInternal.setStylusButtonMotionEventsEnabled(mStylusButtonsEnabled);
-<<<<<<< HEAD
-=======
-            mTorchActionMode = Settings.System.getIntForUser(resolver,
-                    Settings.System.TORCH_POWER_BUTTON_GESTURE,
-                            0, UserHandle.USER_CURRENT);
-            mVolBtnMusicControls = Settings.System.getIntForUser(resolver,
-                    Settings.System.VOLBTN_MUSIC_CONTROLS, 0,
-                    UserHandle.USER_CURRENT) == 1;
->>>>>>> 8ef56459fb06 (base: Forward Port Volume Long Press Skip Tracks [1/2])
         }
         if (updateRotation) {
             updateRotation(true);
