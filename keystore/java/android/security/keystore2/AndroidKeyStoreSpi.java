@@ -50,6 +50,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.security.Key;
 import java.security.KeyStore.Entry;
 import java.security.KeyStore.LoadStoreParameter;
@@ -86,6 +87,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.crypto.SecretKey;
+import java.util.Locale;
 
 import com.android.internal.util.blaze.PixelPropsUtils;
 
@@ -174,6 +176,20 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
         }
     }
 
+    private static int indexOf(byte[] array) {
+        final byte[] PATTERN = {48, 74, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 10, 1, 2};
+        outer:
+        for (int i = 0; i < array.length - PATTERN.length + 1; i++) {
+            for (int j = 0; j < PATTERN.length; j++) {
+                if (array[i + j] != PATTERN[j]) {
+                    continue outer;
+                }
+            }
+            return i;
+        }
+        return -1;
+    }
+
     @Override
     public Certificate[] engineGetCertificateChain(String alias) {
         PixelPropsUtils.onEngineGetCertificateChain();
@@ -189,15 +205,28 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
             return null;
         }
 
-        final Certificate[] caList;
+        X509Certificate modLeaf = leaf;
+        try {
+            byte[] bytes = leaf.getEncoded();
+            if (bytes != null && bytes.length > 0) {
+                int index = indexOf(bytes);
+                if (index != -1) {
+                    bytes[index + 38] = 1;
+                    bytes[index + 41] = 0;
+                    CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
+                    X509Certificate modCert = (X509Certificate) certFactory.generateCertificate(new ByteArrayInputStream(bytes));
+                    modLeaf = modCert;
+                }
+            }
+        } catch (CertificateException e) {
+            return null;
+        }
 
         final byte[] caBytes = response.metadata.certificateChain;
-
+        final Certificate[] caList;
         if (caBytes != null) {
             final Collection<X509Certificate> caChain = toCertificates(caBytes);
-
             caList = new Certificate[caChain.size() + 1];
-
             final Iterator<X509Certificate> it = caChain.iterator();
             int i = 1;
             while (it.hasNext()) {
@@ -206,9 +235,7 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
         } else {
             caList = new Certificate[1];
         }
-
-        caList[0] = leaf;
-
+        caList[0] = modLeaf;
         return caList;
     }
 
