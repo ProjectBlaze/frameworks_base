@@ -100,18 +100,26 @@ open class QSTileViewImpl @JvmOverloads constructor(
         }
 
     private val colorActive = Utils.getColorAttrDefaultColor(context, R.attr.shadeActive)
-    private val colorInactive = Utils.getColorAttrDefaultColor(context, R.attr.shadeInactive)
+    private val colorOffstate = Utils.getColorAttrDefaultColor(context, R.attr.shadeInactive) 
+    private val colorInactive = if (isRoundQS()) Utils.applyAlpha(INACTIVE_ALPHA, colorOffstate)
+            else colorOffstate
     private val colorUnavailable = Utils.applyAlpha(UNAVAILABLE_ALPHA, colorInactive)
 
-    private val colorLabelActive = Utils.getColorAttrDefaultColor(context, R.attr.onShadeActive)
-    private val colorLabelInactive = Utils.getColorAttrDefaultColor(context, R.attr.onShadeInactive)
+    private val colorLabelActive = Utils.getColorAttrDefaultColor(context,
+            if (isRoundQS()) R.attr.onShadeInactive
+            else R.attr.onShadeActive)
+    private val colorLabelInactive =
+            Utils.getColorAttrDefaultColor(context, if (isRoundQS()) R.attr.onShadeInactiveVariant
+            else R.attr.onShadeInactive)
     private val colorLabelUnavailable =
         Utils.getColorAttrDefaultColor(context, R.attr.outline)
 
     private val colorSecondaryLabelActive =
-        Utils.getColorAttrDefaultColor(context, R.attr.onShadeActiveVariant)
+            Utils.getColorAttrDefaultColor(context, if (isRoundQS()) R.attr.onShadeInactiveVariant
+            else R.attr.onShadeActiveVariant)
     private val colorSecondaryLabelInactive =
-            Utils.getColorAttrDefaultColor(context, R.attr.onShadeInactiveVariant)
+            Utils.getColorAttrDefaultColor(context, if (isRoundQS()) R.attr.outline
+            else R.attr.onShadeInactiveVariant)
     private val colorSecondaryLabelUnavailable =
         Utils.getColorAttrDefaultColor(context, R.attr.outline)
 
