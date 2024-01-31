@@ -46,12 +46,12 @@ interface MobileIconViewModelCommon {
     val icon: Flow<SignalIconModel>
     val contentDescription: Flow<ContentDescription>
     val roaming: Flow<Boolean>
-    val isRoamingVisible: Flow<Boolean>
     /** The RAT icon (LTE, 3G, 5G, etc) to be displayed. Null if we shouldn't show anything */
     val networkTypeIcon: Flow<Icon.Resource?>
     val activityInVisible: Flow<Boolean>
     val activityOutVisible: Flow<Boolean>
     val activityContainerVisible: Flow<Boolean>
+    val showHd: Flow<Boolean>
 }
 
 /**
@@ -196,18 +196,6 @@ constructor(
             )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
-    override val isRoamingVisible: StateFlow<Boolean> =
-        combine(
-                roaming,
-                iconInteractor.isRoamingForceHidden
-            ) { isRoaming, isHidden ->
-                // If it's force hidden, just hide.
-                // Otherwise follow roaming state
-                isRoaming && !isHidden
-            }
-            .distinctUntilChanged()
-            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
-
     private val activity: Flow<DataActivityModel?> =
         if (!constants.shouldShowActivityConfig) {
             flowOf(null)
@@ -229,4 +217,30 @@ constructor(
         activity
             .map { it != null && (it.hasActivityIn || it.hasActivityOut) }
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
+    private val showVoWifi: StateFlow<Boolean> =
+        combine(
+                iconInteractor.isVoWifi,
+                iconInteractor.isVoWifiForceHidden
+            ) { isVoWifi, isHidden ->
+                // If it's force hidden, just hide.
+                // Otherwise follow VoWifi state
+                isVoWifi && !isHidden
+            }
+            .distinctUntilChanged()
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
+    override val showHd: StateFlow<Boolean> =
+        combine(
+                iconInteractor.isMobileHd,
+                iconInteractor.isMobileHdForceHidden,
+                showVoWifi,
+            ) { isHd, isHidden, voWifi ->
+                // If it's force hidden or VoWifi available, just hide.
+                // Otherwise follow HD state
+                isHd && !(isHidden || voWifi)
+            }
+            .distinctUntilChanged()
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
 }
