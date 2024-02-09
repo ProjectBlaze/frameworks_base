@@ -5941,8 +5941,8 @@ public final class Settings {
          * @hide
          */
         public static final String NAVIGATION_BAR_MENU_ARROW_KEYS = "navigation_bar_menu_arrow_keys";
-        
-        /** 
+
+        /**
          * Navbar style
          * @hide
          */
@@ -5954,13 +5954,6 @@ public final class Settings {
          */
         @Readable
         public static final String ENABLE_FLOATING_ROTATION_BUTTON = "enable_floating_rotation_button";
-
-        /**
-         *  Enable statusbar double tap gesture on to put device to sleep
-         *  0 = 0ff, 1 = on
-         * @hide
-         */
-        public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /**
          * Whether to show the ripple animation on fingerprint unlock
