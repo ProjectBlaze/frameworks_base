@@ -32,6 +32,13 @@ import java.util.Locale;
 
 public class BlazeUtils {
 
+    public static void switchScreenOff(Context ctx) {
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        if (pm!= null) {
+            pm.goToSleep(SystemClock.uptimeMillis());
+        }
+    }
+
     public static boolean isChineseLanguage() {
        return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
                Locale.CHINESE.getLanguage());
@@ -77,6 +84,10 @@ public class BlazeUtils {
 
     public static boolean isPackageInstalled(Context context, String pkg) {
         return isPackageInstalled(context, pkg, true);
+    }
+
+    public static boolean deviceHasFlashlight(Context ctx) {
+        return ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     public static boolean deviceSupportsFlashLight(Context context) {
