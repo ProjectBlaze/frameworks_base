@@ -192,10 +192,6 @@
     <bool name="config_dt2sGestureAvailable">true</bool>
     <bool name="config_dt2sGestureEnabledByDefault">true</bool>
 
-    <!-- List of system apps that are allowed to be locked with app lock.
-        Use with extreme caution. -->
-    <string-array name="config_appLockAllowedSystemApps" translatable="false" />
-
     <!-- Whether to cancel fingerprint operation if not idle -->
     <bool name="config_fpCancelIfNotIdle">false</bool>
 
